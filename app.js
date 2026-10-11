@@ -2530,7 +2530,6 @@ function initSchoolIntroLoader() {
   const bar = document.getElementById("school-progress-bar");
   const text = document.getElementById("school-progress-text");
   const num = document.getElementById("school-progress-num");
-  const vid = document.getElementById("school-loader-video");
 
   if (!loader || !bar) return;
 
@@ -2539,29 +2538,21 @@ function initSchoolIntroLoader() {
 
   loader.classList.remove("loader-hidden");
 
-  // Play background cinematic video
-  if (vid) {
-    try {
-      vid.currentTime = 0;
-      vid.play().catch(e => console.log("Video auto-play notice:", e));
-    } catch (e) {}
-  }
-
   let progress = 0;
   bar.style.width = "0%";
   if (num) num.innerText = "0%";
-  if (text) text.innerText = "🎬 Playing Tractor Field Footage...";
+  if (text) text.innerText = "Initializing Agritech Prototype...";
 
   const statusSteps = [
-    { at: 10, msg: "🎬 Playing Tractor Field Footage..." },
-    { at: 32, msg: "🏫 Shree Siddhi Vinayagar English High School..." },
-    { at: 60, msg: "🌱 Loading AGRI-SHARE Innovation Model..." },
-    { at: 85, msg: "🚜 Calibrating Agricultural Registry..." },
+    { at: 15, msg: "Initializing Agritech Prototype..." },
+    { at: 38, msg: "Loading SSVEHS Science Project..." },
+    { at: 68, msg: "Connecting Agricultural Registry..." },
+    { at: 88, msg: "Calibrating Machine Matrix..." },
     { at: 100, msg: "Welcome Judges & Visitors! 🌱" }
   ];
 
   schoolLoaderTimer = setInterval(() => {
-    progress += Math.floor(Math.random() * 4) + 2;
+    progress += Math.floor(Math.random() * 5) + 3;
     if (progress >= 100) {
       progress = 100;
       clearInterval(schoolLoaderTimer);
@@ -2570,7 +2561,7 @@ function initSchoolIntroLoader() {
       if (text) text.innerText = "Welcome Judges & Visitors! 🌱";
       setTimeout(() => {
         dismissSchoolLoader();
-      }, 600);
+      }, 500);
       return;
     }
 
@@ -2581,72 +2572,25 @@ function initSchoolIntroLoader() {
     if (currentStep && text) {
       text.innerText = currentStep.msg;
     }
-  }, 60);
+  }, 45);
 
-  // Fallback safety timeout (4.5s)
+  // Fallback safety timeout (maximum 3.4s)
   schoolLoaderSafetyTimeout = setTimeout(() => {
     dismissSchoolLoader();
-  }, 4500);
+  }, 3400);
 }
 
 function dismissSchoolLoader() {
   const loader = document.getElementById("school-intro-loader");
-  const vid = document.getElementById("school-loader-video");
   if (schoolLoaderTimer) clearInterval(schoolLoaderTimer);
   if (schoolLoaderSafetyTimeout) clearTimeout(schoolLoaderSafetyTimeout);
-  if (vid) {
-    try { vid.pause(); } catch (e) {}
-  }
   if (loader && !loader.classList.contains("loader-hidden")) {
     loader.classList.add("loader-hidden");
   }
 }
 
-function toggleLoaderVideoAudio() {
-  const vid = document.getElementById("school-loader-video");
-  const icon = document.getElementById("loader-audio-icon");
-  const text = document.getElementById("loader-audio-text");
-  if (!vid) return;
-
-  vid.muted = !vid.muted;
-  if (!vid.muted) {
-    if (icon) icon.innerText = "🔊";
-    if (text) text.innerText = "Audio On";
-    vid.volume = 1.0;
-  } else {
-    if (icon) icon.innerText = "🔇";
-    if (text) text.innerText = "Audio Muted";
-  }
-}
-
 function replaySchoolIntro() {
   initSchoolIntroLoader();
-}
-
-// Fullscreen Dedicated Intro Video Modal for Judges
-function openIntroVideoModal() {
-  const modal = document.getElementById("intro-video-modal");
-  const player = document.getElementById("intro-modal-player");
-  if (modal) {
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
-  if (player) {
-    player.currentTime = 0;
-    player.play().catch(e => console.log("Player play notice:", e));
-  }
-}
-
-function closeIntroVideoModal() {
-  const modal = document.getElementById("intro-video-modal");
-  const player = document.getElementById("intro-modal-player");
-  if (player) {
-    try { player.pause(); } catch (e) {}
-  }
-  if (modal) {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
-  }
 }
 
 // Auto-run loader on window load

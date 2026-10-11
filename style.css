@@ -3335,92 +3335,8 @@ html, body {
   transform: scale(1.03);
 }
 
-/* Background Cinematic Video */
-.school-loader-bg-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  opacity: 0.65;
-  filter: contrast(1.15) brightness(0.82);
-  pointer-events: none;
-  transform: scale(1.02);
-  transition: opacity 0.5s ease;
-}
-
-.school-loader-video-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(15, 35, 24, 0.72) 0%, rgba(6, 17, 10, 0.88) 60%, rgba(3, 10, 6, 0.96) 100%);
-  backdrop-filter: blur(1.5px);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.school-video-live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(74, 222, 128, 0.35);
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #86EFAC;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.85rem;
-  backdrop-filter: blur(8px);
-}
-
-.school-video-live-badge .live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #22C55E;
-  box-shadow: 0 0 8px #22C55E;
-  animation: liveDotPulse 1.5s infinite;
-}
-
-@keyframes liveDotPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.75); }
-}
-
-.school-loader-actions-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.school-loader-audio-btn {
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #E2E8F0;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: all 0.2s;
-  backdrop-filter: blur(8px);
-}
-
-.school-loader-audio-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.35);
-  color: #FFFFFF;
-}
-
 .school-loader-container {
-  max-width: 540px;
+  max-width: 520px;
   width: 100%;
   text-align: center;
   position: relative;
@@ -3681,28 +3597,6 @@ html, body {
   }
 }
 
-/* Hero Intro Video Action Button */
-.btn-intro-play {
-  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
-  color: #FFFFFF !important;
-  border: 1.5px solid rgba(134, 239, 172, 0.45);
-  box-shadow: 0 4px 14px rgba(22, 101, 52, 0.35);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.65rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
 
-.btn-intro-play:hover {
-  background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
-  border-color: #86EFAC;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(22, 101, 52, 0.45);
-  color: #FFFFFF !important;
-}
 
 
