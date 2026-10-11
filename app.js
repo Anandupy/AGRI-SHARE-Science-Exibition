@@ -649,7 +649,7 @@ async function handleFindEquipmentSubmit(event) {
       const json = await res.json();
 
       if (json.success && Array.isArray(json.data)) {
-        renderSearchResults(json.data, hours, village, equipment);
+        renderSearchResults(json.data, hours, village, equipment, json.isNearbyFallback || false);
         showToast(`Found ${json.data.length} live matches in Google Sheets!`, "success");
         if (btn) btn.innerText = "Search Equipment";
         return;
@@ -670,6 +670,7 @@ async function handleFindEquipmentSubmit(event) {
 
 function executeFindSearch(village, equipment, hours) {
   currentRentalHours = hours;
+  let isNearbyFallback = false;
 
   let matches = currentEquipmentDatabase.filter(item => {
     const matchEquip = !equipment || equipment === "ALL" || item.equipment.toLowerCase() === equipment.toLowerCase();
@@ -682,6 +683,7 @@ function executeFindSearch(village, equipment, hours) {
     matches = currentEquipmentDatabase.filter(item => {
       return !equipment || equipment === "ALL" || item.equipment.toLowerCase() === equipment.toLowerCase();
     });
+    if (matches.length > 0) isNearbyFallback = true;
   }
 
   // Sort: Available first, then by distance
@@ -691,16 +693,23 @@ function executeFindSearch(village, equipment, hours) {
     return (a.distance || 0) - (b.distance || 0);
   });
 
-  renderSearchResults(matches, hours, village, equipment);
+  renderSearchResults(matches, hours, village, equipment, isNearbyFallback);
 }
 
-function renderSearchResults(items, hours, village, equipment) {
+function renderSearchResults(items, hours, village, equipment, isNearbyFallback = false) {
   const grid = document.getElementById("search-results-grid");
   const summary = document.getElementById("search-results-summary");
   const countChip = document.getElementById("results-count-chip");
 
   if (summary) {
-    summary.innerHTML = `Showing available equipment for <strong>${equipment}</strong> in <strong>${village}</strong> (${hours} hours rental)`;
+    if (isNearbyFallback && items.length > 0) {
+      summary.innerHTML = `
+        <span style="color: #B45309; font-weight: 600;">📍 Note: Direct machine not registered inside "${village}".</span>
+        Showing nearest matching <strong>${equipment}</strong> from nearby villages (${hours} hours rental):
+      `;
+    } else {
+      summary.innerHTML = `Showing available equipment for <strong>${equipment}</strong> in <strong>${village}</strong> (${hours} hours rental)`;
+    }
   }
   if (countChip) {
     countChip.innerText = `${items.length} Machines Found`;

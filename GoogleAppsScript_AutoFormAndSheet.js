@@ -199,6 +199,7 @@ function doGet(e) {
     if (action === 'search') {
       var queryVillage = (e.parameter.village || '').trim().toLowerCase();
       var queryEquipment = (e.parameter.equipment || '').trim().toLowerCase();
+      var isNearby = false;
       
       var matched = allItems.filter(function(item) {
         var matchEquip = !queryEquipment || queryEquipment === 'all' || item.equipment.toLowerCase().indexOf(queryEquipment) !== -1;
@@ -206,10 +207,19 @@ function doGet(e) {
         return matchEquip && matchVill;
       });
 
+      // If village has 0 matches, show nearest matching equipment from nearby villages
+      if (matched.length === 0 && queryEquipment && queryEquipment !== 'all') {
+        matched = allItems.filter(function(item) {
+          return item.equipment.toLowerCase().indexOf(queryEquipment) !== -1;
+        });
+        if (matched.length > 0) isNearby = true;
+      }
+
       return jsonResponse({
         success: true,
         action: 'search',
         count: matched.length,
+        isNearbyFallback: isNearby,
         data: matched
       });
     }
