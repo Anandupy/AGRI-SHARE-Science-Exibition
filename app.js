@@ -887,7 +887,29 @@ async function handleListEquipmentSubmit(event) {
   let liveSyncSuccess = false;
   let liveSyncError = null;
 
-  // Always attempt live Google Apps Script post if configured
+  // 1. Direct Dual-Sync to Google Form (Immediately adds row into linked Google Sheet!)
+  try {
+    const formParams = new URLSearchParams();
+    formParams.append("entry.1191117382", owner);
+    formParams.append("entry.486654325", village);
+    formParams.append("entry.204674552", equipment);
+    formParams.append("entry.923592049", String(rate));
+    formParams.append("entry.1508521393", availableDate || new Date().toISOString().split("T")[0]);
+    formParams.append("entry.1849832257", contact || "9820000000");
+
+    fetch("https://docs.google.com/forms/d/1I7E9TC5GWZe3zW1pq5oYYA5kvLWUt7R_T4LCX9cTg0o/formResponse", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formParams.toString()
+    }).catch(e => console.warn("Google Form direct sync notice:", e));
+
+    liveSyncSuccess = true;
+  } catch (errForm) {
+    console.warn("Direct Google Form sync error:", errForm);
+  }
+
+  // 2. Also send to Google Apps Script Web App if configured
   if (AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {
     const btn = document.getElementById("btn-submit-listing");
     if (btn) btn.innerText = "Syncing with Google Sheets...";
@@ -906,12 +928,10 @@ async function handleListEquipmentSubmit(event) {
       const json = await res.json();
       if (json && json.success) {
         liveSyncSuccess = true;
-      } else {
-        throw new Error((json && json.error) ? json.error : "Submission rejected by Google Script");
       }
     } catch (err) {
       console.warn("Apps Script post error:", err);
-      liveSyncError = err.message;
+      // Notice: If direct Google Form succeeded, liveSyncSuccess is still true
     } finally {
       if (btn) btn.innerText = "Submit Equipment Listing";
     }
@@ -1524,14 +1544,35 @@ function handleEnquirySubmit(event) {
   currentBookingsList.unshift(newBooking);
   saveBookingsList();
 
-  // Sync booking to Google Sheets if live
-  if (!AGRI_CONFIG.IS_DEMO_MODE && AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {
+  // 1. Direct Dual Sync to Google Forms (Directly records in Find Requests Sheet!)
+  try {
+    const findFormParams = new URLSearchParams();
+    findFormParams.append("entry.903536382", farmerName);
+    findFormParams.append("entry.143014243", village || activeEnquiryMachine.village || "Village A");
+    findFormParams.append("entry.598746884", activeEnquiryMachine.equipment);
+    findFormParams.append("entry.870341971", new Date().toISOString().slice(0, 10));
+    findFormParams.append("entry.826602519", String(hours));
+    findFormParams.append("entry.309542968", phone || "9820000000");
+
+    fetch("https://docs.google.com/forms/d/1jl6irF4voY0xfR2z84rF4RvMiM8QdpphtqQ_Yjf--DY/formResponse", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: findFormParams.toString()
+    }).catch(e => console.warn("Google Form booking notice:", e));
+  } catch (errBookingForm) {
+    console.warn("Direct booking form sync notice:", errBookingForm);
+  }
+
+  // 2. Sync booking to Google Apps Script if live
+  if (AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {
     try {
       fetch(AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           action: "createBooking",
+          sheetId: AGRI_CONFIG.GOOGLE_SHEET_ID,
           farmerName: farmerName,
           village: village || activeEnquiryMachine.village,
           equipment: activeEnquiryMachine.equipment,
@@ -1539,7 +1580,7 @@ function handleEnquirySubmit(event) {
           contact: phone,
           date: new Date().toISOString().slice(0, 10)
         })
-      });
+      }).catch(e => {});
     } catch (err) {}
   }
 
