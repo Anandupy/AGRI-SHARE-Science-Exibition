@@ -1,0 +1,15 @@
+ID,Equipment,Owner,Village,Rate/hr,Status,Best Month,Available Date,Contact Number
+A01,Rotavator,Farmer A,Village A,800,Available,April–May,2026-10-15,9820112233
+A02,Tractor,Farmer B,Village B,1000,Available,April–June,2026-10-16,9820334455
+A03,Seed Drill,Farmer C,Village A,600,Booked,June–July,2026-10-17,9820445566
+A04,Sprayer,Farmer D,Village C,250,Available,July–September,2026-10-18,9820123456
+A05,Harvester,Farmer E,Village B,1500,Available,October–November,2026-10-22,9820667788
+A06,Thresher,Farmer F,Village A,700,Available,October–December,2026-10-25,9820551122
+A07,Rotavator,Farmer G,Village C,750,Available,November–December,2026-10-20,9820773344
+A08,Tractor,Farmer H,Village A,1100,Available,October–November,2026-10-21,9820884455
+A09,Seed Drill,Farmer I,Village B,650,Available,November–December,2026-10-23,9820995566
+A10,Sprayer,Farmer J,Village B,280,Booked,January–February,2026-10-19,9820226677
+A11,Harvester,Farmer K,Village A,1600,Available,March–April,2026-10-24,9820337788
+A12,Thresher,Farmer L,Village C,750,Available,March–April,2026-10-26,9820448899
+A13,Laser Land Leveller,Farmer M,Village A,950,Available,April–May,2026-10-27,9820556677
+A14,Power Tiller,Farmer N,Village B,500,Available,June–July,2026-10-28,9820667788
