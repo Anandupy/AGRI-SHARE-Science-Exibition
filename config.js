@@ -25,8 +25,8 @@ const AGRI_CONFIG = {
   GOOGLE_APPS_SCRIPT_PROJECT_URL: "https://script.google.com/home/projects/1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm/edit",
   GOOGLE_APPS_SCRIPT_PROJECT_ID: "1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm",
 
-  // Seamless Demo Mode (automatically falls back to 14 sample records if live endpoint is not deployed)
-  IS_DEMO_MODE: true,
+  // Live Google Cloud Connected Mode (Syncs directly with Google Sheets)
+  IS_DEMO_MODE: false,
 
   // Exhibition Metadata
   VERSION: "2.4.0",

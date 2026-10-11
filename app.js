@@ -884,22 +884,34 @@ async function handleListEquipmentSubmit(event) {
     info: `Registered by ${owner}. High condition farm machinery.`
   };
 
-  // Attempt live Google Apps Script post if configured
-  if (!AGRI_CONFIG.IS_DEMO_MODE && AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {
+  let liveSyncSuccess = false;
+  let liveSyncError = null;
+
+  // Always attempt live Google Apps Script post if configured
+  if (AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {
     const btn = document.getElementById("btn-submit-listing");
     if (btn) btn.innerText = "Syncing with Google Sheets...";
 
     try {
+      const payload = {
+        ...newRecord,
+        sheetId: AGRI_CONFIG.GOOGLE_SHEET_ID
+      };
+
       const res = await fetch(AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(newRecord)
+        body: JSON.stringify(payload)
       });
       const json = await res.json();
-      if (!json.success) throw new Error(json.error || "Submission failed");
+      if (json && json.success) {
+        liveSyncSuccess = true;
+      } else {
+        throw new Error((json && json.error) ? json.error : "Submission rejected by Google Script");
+      }
     } catch (err) {
       console.warn("Apps Script post error:", err);
-      showToast("Live Google sync failed; recorded in local exhibition session.", "error");
+      liveSyncError = err.message;
     } finally {
       if (btn) btn.innerText = "Submit Equipment Listing";
     }
@@ -919,7 +931,14 @@ async function handleListEquipmentSubmit(event) {
     });
   }
 
-  showToast(`✅ Equipment registered! Updated in Google Sheets & Kisan Portal with ID: ${newId}.`, "success");
+  if (liveSyncSuccess) {
+    showToast(`✅ Saved directly to Google Sheets & Farmer Portal with ID: ${newId}!`, "success");
+  } else if (liveSyncError) {
+    showToast(`⚠️ Google Sheets sync issue: ${liveSyncError}. (Saved in local session)`, "error");
+  } else {
+    showToast(`✅ Equipment registered locally with ID: ${newId}.`, "success");
+  }
+
   document.getElementById("list-equipment-form").reset();
   updateDefaultRate("Rotavator");
 
