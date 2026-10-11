@@ -303,6 +303,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Auto-fetch live records from Google Sheets if configured
   fetchLiveGoogleSheetData();
+
+  // Handle URL hash navigation
+  const initialHash = window.location.hash.replace("#", "").replace("page-", "");
+  if (initialHash && ["find", "list", "available", "calculator", "calendar", "about"].includes(initialHash)) {
+    navigateTo(initialHash);
+  }
+
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash.replace("#", "").replace("page-", "");
+    if (hash && ["home", "find", "list", "available", "calculator", "calendar", "about"].includes(hash)) {
+      navigateTo(hash);
+    }
+  });
 });
 
 async function fetchLiveGoogleSheetData() {
@@ -424,6 +437,9 @@ function navigateTo(pageId) {
   }
 
   currentActivePage = pageId;
+  if (window.location.hash !== `#${pageId}` && window.location.hash !== `#page-${pageId}`) {
+    try { history.replaceState(null, "", `#${pageId}`); } catch(e) {}
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   // Close mobile nav menu if open
