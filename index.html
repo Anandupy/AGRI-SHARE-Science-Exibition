@@ -244,6 +244,11 @@
 
         <!-- Quick Tools Group -->
         <div class="header-tools-group">
+          <!-- Full Website Tour Chip -->
+          <button class="btn-tour-chip" onclick="startFullWebsiteTour()" title="Start Full Interactive Website Tour (A to Z)">
+            <span>✨ Tour</span>
+          </button>
+
           <!-- Google Integration Status & Settings -->
           <button class="config-trigger-btn icon-only-tool" onclick="openConfigModal()" title="View Google Sheets & Forms Integration Settings">
             <span>⚙️</span>
@@ -1850,7 +1855,10 @@
         <span class="demo-hud-badge"><span class="demo-pulse-dot"></span> LIVE JUDGE DEMO</span>
         <span id="demo-hud-step-text" class="demo-hud-text">Simulating farmer interaction...</span>
       </div>
-      <button type="button" class="demo-hud-stop-btn" onclick="stopJudgeLiveDemo()">⏹️ Stop Demo</button>
+      <div class="demo-hud-actions">
+        <button type="button" class="demo-hud-skip-btn" onclick="skipTourStep()" title="Skip to next tour step">⏭️ Skip Step</button>
+        <button type="button" class="demo-hud-stop-btn" onclick="stopJudgeLiveDemo()" title="Exit tour">⏹️ Stop Tour</button>
+      </div>
     </div>
     <div id="demo-virtual-cursor" class="demo-virtual-cursor">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
