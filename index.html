@@ -493,15 +493,19 @@
             <span class="demo-pulse-dot"></span>
             <span>🎬 1-Click Judge Demo</span>
           </button>
+          <div class="list-mode-toggle">
+            <button class="tab-btn active" id="tab-find-web-form" onclick="switchFindMode('web')">Web Search (Live Sync)</button>
+            <button class="tab-btn" id="tab-find-embed-form" onclick="switchFindMode('embed')">Google Form Embed</button>
+          </div>
           <button class="btn btn-outline btn-sm" onclick="navigateTo('available')">Browse All Machinery →</button>
         </div>
       </div>
 
       <div class="two-column-layout">
         <!-- Search Input Card -->
-        <div class="card">
+        <div class="card" id="find-web-form-container">
           <h2 class="card-title">Search Equipment</h2>
-          <p class="card-subtext" style="margin-bottom: 1.25rem;">Enter your farming requirements to find matching machinery.</p>
+          <p class="card-subtext" style="margin-bottom: 1.25rem;">Google Form "Find Agricultural Equipment" Integration.</p>
 
           <form id="find-equipment-form" onsubmit="handleFindEquipmentSubmit(event)">
             <div class="form-group">
@@ -576,44 +580,88 @@
           </form>
         </div>
 
-        <!-- Google Architecture & Workflow Information -->
-        <div class="workflow-info-card">
-          <h3><span>⚙️</span> Real Google Backend Workflow</h3>
-          <p>
-            Important technical note: Google Forms alone cannot return dynamically filtered search results to the website. The live workflow is implemented as follows:
-          </p>
+        <!-- Embedded Google Form Container for Find -->
+        <div class="embed-form-container" id="find-embed-form-container" style="display: none;">
+          <h2 class="card-title" style="margin-bottom: 0.5rem;">Embedded Google Form</h2>
+          <p class="card-subtext" style="margin-bottom: 1.25rem;">Title: "Find Agricultural Equipment"</p>
+          
+          <div id="find-embed-iframe-wrapper">
+            <iframe id="google-find-form-iframe" class="embed-iframe" src="https://docs.google.com/forms/d/1jl6irF4voY0xfR2z84rF4RvMiM8QdpphtqQ_Yjf--DY/viewform?embedded=true" title="Google Form Find Equipment">
+              Loading Google Form...
+            </iframe>
+          </div>
 
-          <div class="flow-step-list">
-            <div class="flow-step-item">
-              <span class="flow-step-badge">1</span>
-              <div>
-                <strong>Farmer Enters Request:</strong> Submission is recorded in Google Sheets via Google Form "Find Agricultural Equipment" or Google Apps Script.
-              </div>
-            </div>
-            <div class="flow-step-item">
-              <span class="flow-step-badge">2</span>
-              <div>
-                <strong>Authoritative Source:</strong> Google Sheets ("AGRISHARE EQUIPMENT DATABASE") stores all listings, status, and hourly rates.
-              </div>
-            </div>
-            <div class="flow-step-item">
-              <span class="flow-step-badge">3</span>
-              <div>
-                <strong>Matching Engine:</strong> Google Apps Script queries the sheet, matches village, date, and equipment, and returns results to the website.
-              </div>
-            </div>
-            <div class="flow-step-item">
-              <span class="flow-step-badge">4</span>
-              <div>
-                <strong>Simulated Fallback:</strong> When Google Apps Script is not deployed, the website runs in demo mode with simulated records.
-              </div>
+          <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <a href="https://docs.google.com/forms/d/1jl6irF4voY0xfR2z84rF4RvMiM8QdpphtqQ_Yjf--DY/viewform" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+              <span>📋</span> Open Form in New Tab ↗
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY/edit?resourcekey=&gid=1857933895#gid=1857933895" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+              <span>📊</span> Open Find Responses Sheet ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Guide & Google Architecture -->
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <!-- Instructions Card on Linking Google Form & Sheet for Find -->
+          <div class="card" style="background: var(--bg-muted);">
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--primary-dark);">
+              📋 Find Requests Sheet Destination Guide
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">
+              How requirements and rental enquiries are recorded into your designated Google Sheet:
+            </p>
+
+            <ol style="padding-left: 1.25rem; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.65rem;">
+              <li>Google Form: <strong>Find Agricultural Equipment</strong></li>
+              <li>Google Sheet: <strong>Find Agricultural Equipment (Responses)</strong></li>
+              <li>Responses Tab: <strong>Form Responses 1</strong> (GID: 1857933895)</li>
+              <li>When farmers search or book, details (Farmer, Village, Date, Hours, Phone) reflect directly in the spreadsheet!</li>
+            </ol>
+
+            <div style="margin-top: 1.25rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <a href="https://docs.google.com/spreadsheets/d/1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY/edit?resourcekey=&gid=1857933895#gid=1857933895" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+                <span>📊</span> Open Live Find Sheet ↗
+              </a>
+              <button class="btn btn-outline btn-sm" onclick="openConfigModal()">
+                <span>⚙️</span> Cloud Settings
+              </button>
             </div>
           </div>
 
-          <div style="margin-top: 1.25rem;">
-            <button class="btn btn-secondary btn-sm" onclick="openConfigModal()">
-              View & Test Google Integration Settings
-            </button>
+          <!-- Google Architecture & Workflow Information -->
+          <div class="workflow-info-card">
+            <h3><span>⚙️</span> Real Google Backend Workflow</h3>
+            <p>
+              Important technical note: Google Forms alone cannot return dynamically filtered search results to the website. The live workflow is implemented as follows:
+            </p>
+
+            <div class="flow-step-list">
+              <div class="flow-step-item">
+                <span class="flow-step-badge">1</span>
+                <div>
+                  <strong>Farmer Enters Request:</strong> Submission is recorded in Google Sheets via Google Form "Find Agricultural Equipment" or Google Apps Script.
+                </div>
+              </div>
+              <div class="flow-step-item">
+                <span class="flow-step-badge">2</span>
+                <div>
+                  <strong>Authoritative Source:</strong> Google Sheets ("AGRISHARE EQUIPMENT DATABASE") stores all listings, status, and hourly rates.
+                </div>
+              </div>
+              <div class="flow-step-item">
+                <span class="flow-step-badge">3</span>
+                <div>
+                  <strong>Matching Engine:</strong> Google Apps Script queries the sheet, matches village, date, and equipment, and returns results to the website.
+                </div>
+              </div>
+              <div class="flow-step-item">
+                <span class="flow-step-badge">4</span>
+                <div>
+                  <strong>Simulated Fallback:</strong> When Google Apps Script is not deployed, the website runs in demo mode with simulated records.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

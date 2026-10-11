@@ -123,6 +123,7 @@
   // --- 1. FIND EQUIPMENT DEMO ---
   async function runFindEquipmentDemo() {
     if (typeof navigateTo === "function") navigateTo("find");
+    if (typeof switchFindMode === "function") switchFindMode("web");
     await sleep(300);
 
     setHudStatus("👤 Step 1/7: Entering Farmer Name: Farmer Suresh...");

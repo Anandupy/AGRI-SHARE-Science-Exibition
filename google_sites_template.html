@@ -1357,11 +1357,12 @@ function createAgriShareMaamSystem() { ... }
   </div>
 
   <script>
-    let LIVE_API_URL = localStorage.getItem('agrishare_live_api_url') || 'https://script.google.com/macros/s/AKfycbz7z4MH6QUNo3e0c5VAAY-TG0UspskS0YZYlnTgNLXlw9u5i6qt_dcXcxz47EfyOQOJ/exec';
+    let LIVE_API_URL = localStorage.getItem('agrishare_live_api_url') || 'https://script.google.com/macros/s/AKfycbzzEqB8cxm5FyTNCM42nM5C8DydD90hXiQz3kV9ufHQvN05X_l2FHIj8t3OIyktBzfnrQ/exec';
 
-    let GFORM_FIND_URL = localStorage.getItem('agrishare_gform_find_url') || '';
-    let GFORM_LIST_URL = localStorage.getItem('agrishare_gform_list_url') || '';
-    let GSHEET_URL = localStorage.getItem('agrishare_gsheet_url') || '';
+    let GFORM_FIND_URL = localStorage.getItem('agrishare_gform_find_url') || 'https://docs.google.com/forms/d/1jl6irF4voY0xfR2z84rF4RvMiM8QdpphtqQ_Yjf--DY/viewform';
+    let GFORM_LIST_URL = localStorage.getItem('agrishare_gform_list_url') || 'https://docs.google.com/forms/d/1I7E9TC5GWZe3zW1pq5oYYA5kvLWUt7R_T4LCX9cTg0o/viewform';
+    let GSHEET_URL = localStorage.getItem('agrishare_gsheet_url') || 'https://docs.google.com/spreadsheets/d/1YWFbYnNSZicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE/edit?gid=1815109117#gid=1815109117';
+    let GSHEET_FIND_URL = localStorage.getItem('agrishare_gsheet_find_url') || 'https://docs.google.com/spreadsheets/d/1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY/edit?resourcekey=&gid=1857933895#gid=1857933895';
 
     // Initialize sync status & iframes
     window.addEventListener('DOMContentLoaded', () => {

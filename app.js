@@ -617,6 +617,34 @@ function quickFilterFromHome(equipmentName) {
 // 5. FIND EQUIPMENT & MATCHING (Section 7)
 // =========================================================================
 
+function switchFindMode(mode) {
+  const webContainer = document.getElementById("find-web-form-container");
+  const embedContainer = document.getElementById("find-embed-form-container");
+  const tabWeb = document.getElementById("tab-find-web-form");
+  const tabEmbed = document.getElementById("tab-find-embed-form");
+
+  if (mode === "embed") {
+    if (webContainer) webContainer.style.display = "none";
+    if (embedContainer) embedContainer.style.display = "block";
+    if (tabWeb) tabWeb.classList.remove("active");
+    if (tabEmbed) tabEmbed.classList.add("active");
+
+    const iframe = document.getElementById("google-find-form-iframe");
+    if (iframe && AGRI_CONFIG.GOOGLE_FIND_FORM_URL) {
+      let srcUrl = AGRI_CONFIG.GOOGLE_FIND_FORM_URL;
+      if (!srcUrl.includes("embedded=true")) {
+        srcUrl += (srcUrl.includes("?") ? "&embedded=true" : "?embedded=true");
+      }
+      iframe.src = srcUrl;
+    }
+  } else {
+    if (webContainer) webContainer.style.display = "block";
+    if (embedContainer) embedContainer.style.display = "none";
+    if (tabWeb) tabWeb.classList.add("active");
+    if (tabEmbed) tabEmbed.classList.remove("active");
+  }
+}
+
 function presetSearch(equipment, village, hours) {
   const villageSelect = document.getElementById("find-village");
   const equipSelect = document.getElementById("find-equipment");
@@ -657,6 +685,23 @@ async function handleFindEquipmentSubmit(event) {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: formParams.toString()
     }).catch(e => console.warn("Google Form Find sync notice:", e));
+
+    // Also dual-sync find request to Google Apps Script Web App if active
+    if (AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {
+      fetch(AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          action: "findRequest",
+          farmerName: farmerName,
+          village: village,
+          equipment: equipment,
+          date: dateVal,
+          hours: hours,
+          farmerPhone: phone
+        })
+      }).catch(e => console.warn("Apps Script find POST sync notice:", e));
+    }
 
     showToast(`✅ Requirement for ${equipment} recorded directly in Find Requests Google Sheet!`, "success");
   } catch (errForm) {
