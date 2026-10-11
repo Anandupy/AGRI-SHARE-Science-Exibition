@@ -29,10 +29,11 @@ const TAB_RESPONSES = 'Form Responses 1';
  */
 function doGet(e) {
   var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'getAll';
+  var targetSheetId = (e && e.parameter && e.parameter.sheetId) ? e.parameter.sheetId : MASTER_EQUIPMENT_SHEET_ID;
   
   try {
-    // Open directly using EXACT MASTER SHEET ID!
-    var ss = SpreadsheetApp.openById(MASTER_EQUIPMENT_SHEET_ID);
+    // Open using target Sheet ID
+    var ss = SpreadsheetApp.openById(targetSheetId);
     var allItems = [];
 
     // 1. DYNAMICALLY READ GOOGLE FORM RESPONSES (Tab: "Form Responses 1")
@@ -242,7 +243,8 @@ function doPost(e) {
     }
 
     // 3. Default: Insert new row into EQUIPMENT_MASTER
-    var ssMaster = SpreadsheetApp.openById(MASTER_EQUIPMENT_SHEET_ID);
+    var targetMasterSheetId = body.sheetId || MASTER_EQUIPMENT_SHEET_ID;
+    var ssMaster = SpreadsheetApp.openById(targetMasterSheetId);
     var masterSheet = ssMaster.getSheetByName(TAB_MASTER) || ssMaster.getActiveSheet();
     var lastMasterRow = masterSheet.getLastRow();
     var nextId = 'A' + ('0' + (lastMasterRow - 4 + 1)).slice(-2);

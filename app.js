@@ -1372,13 +1372,28 @@ async function testAppsScriptConnection() {
   statusBox.innerHTML = `<span style="color: var(--primary-color);">⏳ Testing connection to Google Apps Script endpoint...</span>`;
 
   try {
-    const res = await fetch(`${scriptUrl}?action=getAll`);
+    const sheetId = document.getElementById("cfg-sheet-id") ? document.getElementById("cfg-sheet-id").value.trim() : "";
+    const testUrl = sheetId ? `${scriptUrl}?action=getAll&sheetId=${encodeURIComponent(sheetId)}` : `${scriptUrl}?action=getAll`;
+    const res = await fetch(testUrl);
     const json = await res.json();
 
     if (json.success) {
       statusBox.innerHTML = `<span style="color: var(--success-color);">✅ Connection Successful! Connected to Sheet (Records: ${json.count || json.data?.length || 0}).</span>`;
     } else {
-      statusBox.innerHTML = `<span style="color: var(--danger-color);">❌ Endpoint responded with error: ${json.error || "Unknown error"}</span>`;
+      if (json.error && json.error.toLowerCase().includes("missing")) {
+        statusBox.innerHTML = `
+          <div style="background: #FEF3C7; border: 1.5px solid #F59E0B; padding: 0.85rem; border-radius: 8px; color: #92400E; font-size: 0.84rem; line-height: 1.5;">
+            <strong>🎉 Web App API Connection 100% Successful!</strong><br>
+            Google Apps Script se live connection ban gaya hai, lekin Google Drive par <strong>Sheet ID (${sheetId || '1YWFbYn...'})</strong> nahi mili.<br><br>
+            <strong>Ab bas Google Sheet link karni hai:</strong><br>
+            1. Apne Google Drive me <strong>AGRISHARE EQUIPMENT DATABASE</strong> spreadsheet kholein.<br>
+            2. Address bar se Sheet ID copy karein: <code>https://docs.google.com/spreadsheets/d/<strong>[YEH_SHEET_ID_HAI]</strong>/edit</code><br>
+            3. Usko upar <strong>GOOGLE_SHEET_ID</strong> field me daal kar <strong>Save Settings</strong> click karein!
+          </div>
+        `;
+      } else {
+        statusBox.innerHTML = `<span style="color: var(--danger-color);">❌ Endpoint responded with: ${json.error || "Unknown error"}</span>`;
+      }
     }
   } catch (err) {
     statusBox.innerHTML = `

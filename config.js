@@ -17,8 +17,7 @@ const AGRI_CONFIG = {
   GOOGLE_FIND_SHEET_ID: "1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY",
 
   // 5. Google Apps Script Web App Deployment URL for live search & sync
-  // Paste your deployed URL ending in /exec (e.g. https://script.google.com/macros/s/.../exec)
-  GOOGLE_APPS_SCRIPT_WEB_APP_URL: "",
+  GOOGLE_APPS_SCRIPT_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbzzEqB8cxm5FyTNCM42nM5C8DydD90hXiQz3kV9ufHQvN05X_l2FHIj8t3OIyktBzfnrQ/exec",
 
   // 6. Google Apps Script Project Editor URL & Project ID
   GOOGLE_APPS_SCRIPT_PROJECT_URL: "https://script.google.com/home/projects/1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm/edit",
