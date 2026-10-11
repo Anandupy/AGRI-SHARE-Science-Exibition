@@ -1353,6 +1353,21 @@ async function testAppsScriptConnection() {
     return;
   }
 
+  // 1. Detect redirected echo URL
+  if (scriptUrl.includes("googleusercontent.com") || scriptUrl.includes("echo?user_content")) {
+    statusBox.style.display = "block";
+    statusBox.innerHTML = `
+      <div style="background: #FEF2F2; border: 1.5px solid #FCA5A5; padding: 0.85rem; border-radius: 8px; color: #991B1B; font-size: 0.84rem; line-height: 1.5;">
+        <strong>⚠️ Galat URL Format Detect Hua Hai!</strong><br>
+        Aapne redirected browser link paste kiya hai (<code>script.googleusercontent.com/macros/echo...</code>). Yeh temporary cache key hoti hai jo expire ho jaati hai.<br><br>
+        <strong>Sahi Web App URL:</strong><br>
+        Google Apps Script Editor me <strong>Deploy &gt; Manage deployments</strong> (ya New deployment) se Web app URL copy karein jo hamesha <strong><code>/exec</code></strong> par end hota hai:<br>
+        <code>https://script.google.com/macros/s/AKfycb.../exec</code>
+      </div>
+    `;
+    return;
+  }
+
   statusBox.style.display = "block";
   statusBox.innerHTML = `<span style="color: var(--primary-color);">⏳ Testing connection to Google Apps Script endpoint...</span>`;
 
@@ -1366,7 +1381,14 @@ async function testAppsScriptConnection() {
       statusBox.innerHTML = `<span style="color: var(--danger-color);">❌ Endpoint responded with error: ${json.error || "Unknown error"}</span>`;
     }
   } catch (err) {
-    statusBox.innerHTML = `<span style="color: var(--danger-color);">❌ Network test failed: ${err.message}. Ensure Web App is deployed with "Who has access: Anyone".</span>`;
+    statusBox.innerHTML = `
+      <div style="background: #FEF2F2; border: 1.5px solid #FCA5A5; padding: 0.85rem; border-radius: 8px; color: #991B1B; font-size: 0.84rem; line-height: 1.5;">
+        <strong>❌ Network test failed: ${err.message}</strong><br><br>
+        Is problem ko solve karne ke 2 main reasons hote hain:<br>
+        1. <strong>"Who has access" Setting:</strong> Google Apps Script Editor mein Deploy karte waqt <strong>"Anyone"</strong> hona zaroori hai (agar "Only myself" hai toh Vercel par block ho jaata hai).<br>
+        2. <strong>URL format:</strong> URL hamesha <code>https://script.google.com/macros/s/.../exec</code> hona chahiye.
+      </div>
+    `;
   }
 }
 

@@ -17,14 +17,15 @@ const AGRI_CONFIG = {
   GOOGLE_FIND_SHEET_ID: "1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY",
 
   // 5. Google Apps Script Web App Deployment URL for live search & sync
-  GOOGLE_APPS_SCRIPT_WEB_APP_URL: "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnQurmQQypFkqoq5iWB3EHiyA6C4jW8VUC-iX6Pl8Yohik1MVKc81EHFzboORG5dSN8D0NcM5esvMepNDhRQcIzYfGHGwJhoTdpa25EcEPm8v84Jv-EtBRPKeFkkQxyWP7vrZk9Hp63u5cUIn1ivpYSa_KN862AbQMkSmKGIvNCidNkLcSMalG24qUlj231QmNa040uluVlgyZ_GqXKmwnyyW4ZNtyM_XU8ixGZLXA1U4wgZyIye7FrfA0b-sGGwJsq2q3RTNpgvb3cZikIq8E2A7WZBMA&lib=MRd3AkXMfO_2rg42dFonV3zaOcX_IRmAL",
+  // Paste your deployed URL ending in /exec (e.g. https://script.google.com/macros/s/.../exec)
+  GOOGLE_APPS_SCRIPT_WEB_APP_URL: "",
 
   // 6. Google Apps Script Project Editor URL & Project ID
   GOOGLE_APPS_SCRIPT_PROJECT_URL: "https://script.google.com/home/projects/1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm/edit",
   GOOGLE_APPS_SCRIPT_PROJECT_ID: "1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm",
 
-  // Live Google Cloud Mode enabled!
-  IS_DEMO_MODE: false,
+  // Seamless Demo Mode (automatically falls back to 14 sample records if live endpoint is not deployed)
+  IS_DEMO_MODE: true,
 
   // Exhibition Metadata
   VERSION: "2.4.0",
