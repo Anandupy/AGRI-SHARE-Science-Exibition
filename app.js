@@ -308,12 +308,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const initialHash = window.location.hash.replace("#", "").replace("page-", "");
   if (initialHash && ["find", "list", "available", "calculator", "calendar", "about"].includes(initialHash)) {
     navigateTo(initialHash);
+  } else if (initialHash === "owner-dashboard") {
+    openOwnerDashboardModal();
+  } else if (initialHash === "farmer-dashboard") {
+    openFarmerHirerDashboardModal();
+  } else if (initialHash === "config-modal") {
+    openConfigModal();
   }
 
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash.replace("#", "").replace("page-", "");
     if (hash && ["home", "find", "list", "available", "calculator", "calendar", "about"].includes(hash)) {
       navigateTo(hash);
+    } else if (hash === "owner-dashboard") {
+      openOwnerDashboardModal();
+    } else if (hash === "farmer-dashboard") {
+      openFarmerHirerDashboardModal();
+    } else if (hash === "config-modal") {
+      openConfigModal();
     }
   });
 });
@@ -2532,6 +2544,11 @@ function initSchoolIntroLoader() {
   const num = document.getElementById("school-progress-num");
 
   if (!loader || !bar) return;
+
+  if (window.location.search.includes('noloader=1') || window.location.hash.includes('noloader')) {
+    loader.classList.add("loader-hidden");
+    return;
+  }
 
   if (schoolLoaderTimer) clearInterval(schoolLoaderTimer);
   if (schoolLoaderSafetyTimeout) clearTimeout(schoolLoaderSafetyTimeout);

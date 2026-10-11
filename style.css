@@ -3597,6 +3597,55 @@ html, body {
   }
 }
 
+/* Full Website Tour Action Button */
+.btn-tour-start {
+  background: linear-gradient(135deg, #15803D 0%, #047857 50%, #0F766E 100%);
+  color: #FFFFFF !important;
+  border: 1.5px solid rgba(134, 239, 172, 0.6);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-tour-start:hover {
+  background: linear-gradient(135deg, #16A34A 0%, #059669 50%, #0D9488 100%);
+  border-color: #86EFAC;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 22px rgba(16, 185, 129, 0.45);
+  color: #FFFFFF !important;
+}
+
+.tour-sparkle-icon {
+  font-size: 1.15rem;
+  animation: tourSparkle 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes tourSparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.25) rotate(15deg); opacity: 0.85; }
+}
+
+.tour-chip-badge {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  color: #F0FDF4;
+  letter-spacing: 0.03em;
+}
+
+
 
 
 
