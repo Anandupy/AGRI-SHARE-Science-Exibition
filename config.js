@@ -11,7 +11,9 @@ const AGRI_CONFIG = {
   GOOGLE_FIND_FORM_URL: "https://docs.google.com/forms/d/1jl6irF4voY0xfR2z84rF4RvMiM8QdpphtqQ_Yjf--DY/viewform",
 
   // 3. Exact Master Equipment Google Sheet ID (from your browser URL)
-  GOOGLE_SHEET_ID: "1YWFbYnNSzicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE",
+  GOOGLE_SHEET_ID: "1YWFbYnNSZicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE",
+  GOOGLE_SHEET_GID: "1815109117",
+  GOOGLE_SHEET_URL: "https://docs.google.com/spreadsheets/d/1YWFbYnNSZicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE/edit?gid=1815109117#gid=1815109117",
 
   // 4. Exact Find Requests Google Sheet ID (from your browser URL)
   GOOGLE_FIND_SHEET_ID: "1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY",
@@ -38,6 +40,11 @@ const AGRI_CONFIG = {
     const saved = localStorage.getItem('AGRI_CONFIG_OVERRIDES');
     if (saved) {
       const parsed = JSON.parse(saved);
+      // Auto-correct legacy lowercase z in Sheet ID
+      if (parsed.GOOGLE_SHEET_ID && parsed.GOOGLE_SHEET_ID.includes('1YWFbYnNSzic')) {
+        parsed.GOOGLE_SHEET_ID = parsed.GOOGLE_SHEET_ID.replace('1YWFbYnNSzic', '1YWFbYnNSZic');
+        localStorage.setItem('AGRI_CONFIG_OVERRIDES', JSON.stringify(parsed));
+      }
       Object.assign(AGRI_CONFIG, parsed);
     }
   } catch (err) {

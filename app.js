@@ -1305,7 +1305,11 @@ function toggleConfigMode(mode) {
 function saveConfigFromModal() {
   const listUrl = document.getElementById("cfg-list-form-url").value.trim();
   const findUrl = document.getElementById("cfg-find-form-url").value.trim();
-  const sheetId = document.getElementById("cfg-sheet-id").value.trim();
+  let sheetId = document.getElementById("cfg-sheet-id").value.trim();
+  if (sheetId.includes('/d/')) {
+    const match = sheetId.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) sheetId = match[1];
+  }
   const scriptUrl = document.getElementById("cfg-apps-script-url").value.trim();
   const projUrl = document.getElementById("cfg-apps-script-project-url") ? document.getElementById("cfg-apps-script-project-url").value.trim() : "";
   const isDemo = document.getElementById("cfg-mode-toggle").value === "demo";
@@ -1372,7 +1376,11 @@ async function testAppsScriptConnection() {
   statusBox.innerHTML = `<span style="color: var(--primary-color);">⏳ Testing connection to Google Apps Script endpoint...</span>`;
 
   try {
-    const sheetId = document.getElementById("cfg-sheet-id") ? document.getElementById("cfg-sheet-id").value.trim() : "";
+    let sheetId = document.getElementById("cfg-sheet-id") ? document.getElementById("cfg-sheet-id").value.trim() : "";
+    if (sheetId.includes('/d/')) {
+      const match = sheetId.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (match) sheetId = match[1];
+    }
     const testUrl = sheetId ? `${scriptUrl}?action=getAll&sheetId=${encodeURIComponent(sheetId)}` : `${scriptUrl}?action=getAll`;
     const res = await fetch(testUrl);
     const json = await res.json();

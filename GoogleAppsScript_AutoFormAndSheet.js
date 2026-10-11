@@ -9,7 +9,8 @@
  * Project ID:  '1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm'
  * 
  * EXACT GOOGLE SPREADSHEET IDs CONFIGURED:
- * 1. Master Equipment Database: '1YWFbYnNSzicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE'
+ * EXACT GOOGLE SPREADSHEET IDs CONFIGURED:
+ * 1. Master Equipment Database: '1YWFbYnNSZicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE' (gid: 1815109117)
  * 2. Find Equipment Requests:   '1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY'
  * =========================================================================================
  */
@@ -18,7 +19,8 @@
 const APPS_SCRIPT_PROJECT_ID = '1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm';
 
 // Exact Sheet IDs from your Google Drive URLs
-const MASTER_EQUIPMENT_SHEET_ID = '1YWFbYnNSzicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE';
+const MASTER_EQUIPMENT_SHEET_ID = '1YWFbYnNSZicPHZG47rQhQ9tJ8-nJ0TBwJOQaaEnhUVE';
+const MASTER_EQUIPMENT_GID = 1815109117;
 const FIND_RESPONSES_SHEET_ID = '1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY';
 
 const TAB_MASTER = 'EQUIPMENT_MASTER';
@@ -29,82 +31,124 @@ const TAB_RESPONSES = 'Form Responses 1';
  */
 function doGet(e) {
   var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'getAll';
-  var targetSheetId = (e && e.parameter && e.parameter.sheetId) ? e.parameter.sheetId : MASTER_EQUIPMENT_SHEET_ID;
+  var targetSheetId = (e && e.parameter && e.parameter.sheetId) ? e.parameter.sheetId.trim() : MASTER_EQUIPMENT_SHEET_ID;
   
+  // Clean sheet ID if full URL was accidentally passed
+  if (targetSheetId.indexOf('/d/') !== -1) {
+    var match = targetSheetId.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) targetSheetId = match[1];
+  }
+
   try {
     // Open using target Sheet ID
     var ss = SpreadsheetApp.openById(targetSheetId);
     var allItems = [];
+    var matchedTabName = '';
 
-    // 1. DYNAMICALLY READ GOOGLE FORM RESPONSES (Tab: "Form Responses 1")
-    // This reads whatever farmers submit through Google Form!
-    var respSheet = ss.getSheetByName(TAB_RESPONSES) || ss.getSheetByName('Form responses 1') || ss.getSheetByName('Form Responses');
-    if (respSheet && respSheet.getLastRow() >= 2) {
-      var respLastRow = respSheet.getLastRow();
-      // Columns: Timestamp(A) | Owner Name(B) | Village(C) | Equipment(D) | Rate(E) | Available Date(F) | Contact Number(G)
-      var respData = respSheet.getRange(2, 1, respLastRow - 1, 7).getValues();
+    // Helper: Find sheet by GID or Name or fallback
+    function findTargetSheet(spreadsheet, targetGid, preferredNames) {
+      var sheets = spreadsheet.getSheets();
+      if (!sheets || sheets.length === 0) return null;
 
-      for (var r = 0; r < respData.length; r++) {
-        var row = respData[r];
-        if (!row[1] && !row[3]) continue; // Skip empty row
-
-        var dateVal = row[5];
-        var dateStr = '';
-        if (dateVal instanceof Date) {
-          dateStr = Utilities.formatDate(dateVal, Session.getScriptTimeZone(), 'yyyy-MM-dd');
-        } else {
-          dateStr = String(dateVal || '');
+      // 1. Check by GID (e.g. 1815109117)
+      if (targetGid) {
+        for (var i = 0; i < sheets.length; i++) {
+          if (sheets[i].getSheetId() === targetGid) {
+            return sheets[i];
+          }
         }
-
-        var formId = 'F' + ('0' + (r + 1)).slice(-2);
-        allItems.push({
-          id: formId,
-          equipment: String(row[3] || 'Equipment').trim(),
-          owner: String(row[1] || 'Farmer').trim(),
-          village: String(row[2] || 'Village A').trim(),
-          rate: Number(row[4]) || 800,
-          status: 'Available',
-          bestMonth: 'All Season',
-          availableDate: dateStr,
-          contact: String(row[6] || ''),
-          source: 'Google Form Response'
-        });
       }
+
+      // 2. Check by preferred names
+      for (var p = 0; p < preferredNames.length; p++) {
+        var named = spreadsheet.getSheetByName(preferredNames[p]);
+        if (named) return named;
+      }
+
+      // 3. Fallback to first sheet
+      return sheets[0];
     }
 
-    // 2. READ MASTER TAB (EQUIPMENT_MASTER) if present
-    var masterSheet = ss.getSheetByName(TAB_MASTER);
-    if (masterSheet && masterSheet.getLastRow() >= 5) {
-      var masterLastRow = masterSheet.getLastRow();
-      var rawData = masterSheet.getRange(5, 1, masterLastRow - 4, 9).getValues();
+    // 1. DYNAMICALLY READ MASTER / EQUIPMENT SHEET
+    var equipSheet = findTargetSheet(ss, MASTER_EQUIPMENT_GID, [TAB_MASTER, TAB_RESPONSES, 'Form responses 1', 'Sheet1', 'Database']);
+    
+    if (equipSheet && equipSheet.getLastRow() >= 2) {
+      matchedTabName = equipSheet.getName();
+      var lastRow = equipSheet.getLastRow();
+      var lastCol = Math.max(equipSheet.getLastColumn(), 7);
+      
+      // Read top rows to determine where headers are
+      var sampleRows = equipSheet.getRange(1, 1, Math.min(lastRow, 6), lastCol).getValues();
+      var headerRowIdx = 0; // 0-indexed
+      var isTemplateFormat = false;
 
-      for (var i = 0; i < rawData.length; i++) {
-        var mRow = rawData[i];
-        if (!mRow[0]) continue;
+      // Check if row 4/5 has template headers (ID, Equipment Name, etc.)
+      for (var r = 0; r < sampleRows.length; r++) {
+        var rowText = sampleRows[r].join(' ').toLowerCase();
+        if (rowText.indexOf('equipment') !== -1 || rowText.indexOf('tractor') !== -1 || rowText.indexOf('owner') !== -1) {
+          headerRowIdx = r;
+          if (r >= 3) isTemplateFormat = true;
+          break;
+        }
+      }
+
+      var dataStartRow = headerRowIdx + 2; // 1-indexed next row
+      var totalDataRows = lastRow - dataStartRow + 1;
+
+      if (totalDataRows > 0) {
+        var rawData = equipSheet.getRange(dataStartRow, 1, totalDataRows, lastCol).getValues();
         
-        var dStr = '';
-        if (mRow[7] instanceof Date) {
-          dStr = Utilities.formatDate(mRow[7], Session.getScriptTimeZone(), 'yyyy-MM-dd');
-        } else {
-          dStr = String(mRow[7]);
-        }
+        for (var d = 0; d < rawData.length; d++) {
+          var row = rawData[d];
+          // Determine layout: Template (A=ID, B=Equip, C=Owner, D=Village, E=Rate) vs Form Response (A=Timestamp, B=Owner, C=Village, D=Equip, E=Rate)
+          var itemEquip = '';
+          var itemOwner = '';
+          var itemVillage = '';
+          var itemRate = 800;
+          var itemStatus = 'Available';
+          var itemDate = '';
+          var itemContact = '';
+          var itemId = 'EQ-' + ('0' + (d + 1)).slice(-2);
 
-        allItems.push({
-          id: String(mRow[0]),
-          equipment: String(mRow[1]).trim(),
-          owner: String(mRow[2]).trim(),
-          village: String(mRow[3]).trim(),
-          rate: Number(mRow[4]) || 0,
-          status: String(mRow[5]),
-          bestMonth: String(mRow[6]),
-          availableDate: dStr,
-          contact: String(mRow[8]),
-          source: 'Master Registry'
-        });
+          if (isTemplateFormat || (row[0] && String(row[0]).match(/^[A-Z0-9_-]+$/i) && isNaN(row[0]))) {
+            // Template style: Col 0:ID, 1:Equip, 2:Owner, 3:Village, 4:Rate, 5:Status, 6:Month, 7:Date, 8:Contact
+            if (!row[1] && !row[2]) continue;
+            itemId = String(row[0] || itemId);
+            itemEquip = String(row[1] || 'Equipment').trim();
+            itemOwner = String(row[2] || 'Farmer').trim();
+            itemVillage = String(row[3] || 'Local Area').trim();
+            itemRate = Number(row[4]) || 800;
+            itemStatus = String(row[5] || 'Available').trim();
+            itemDate = row[7] instanceof Date ? Utilities.formatDate(row[7], Session.getScriptTimeZone(), 'yyyy-MM-dd') : String(row[7] || '');
+            itemContact = String(row[8] || '').trim();
+          } else {
+            // Form Response style: Col 0:Timestamp, 1:Owner, 2:Village, 3:Equip, 4:Rate, 5:Date, 6:Contact
+            if (!row[1] && !row[3]) continue;
+            itemOwner = String(row[1] || 'Farmer').trim();
+            itemVillage = String(row[2] || 'Local Area').trim();
+            itemEquip = String(row[3] || 'Equipment').trim();
+            itemRate = Number(row[4]) || 800;
+            itemDate = row[5] instanceof Date ? Utilities.formatDate(row[5], Session.getScriptTimeZone(), 'yyyy-MM-dd') : String(row[5] || '');
+            itemContact = String(row[6] || '').trim();
+          }
+
+          allItems.push({
+            id: itemId,
+            equipment: itemEquip,
+            owner: itemOwner,
+            village: itemVillage,
+            rate: itemRate,
+            status: itemStatus,
+            bestMonth: 'All Season',
+            availableDate: itemDate,
+            contact: itemContact,
+            source: matchedTabName
+          });
+        }
       }
     }
 
-    // 3. DYNAMICALLY READ GOOGLE FORM "FIND AGRICULTURAL EQUIPMENT" RESPONSES
+    // 2. DYNAMICALLY READ GOOGLE FORM "FIND AGRICULTURAL EQUIPMENT" RESPONSES
     var allBookings = [];
     try {
       if (FIND_RESPONSES_SHEET_ID) {
