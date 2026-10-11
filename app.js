@@ -2365,3 +2365,85 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// =========================================================================
+// SCHOOL INTRO LOADER ANIMATION — Shree Siddhi Vinayagar English High School (SSVEHS)
+// =========================================================================
+let schoolLoaderTimer = null;
+let schoolLoaderSafetyTimeout = null;
+
+function initSchoolIntroLoader() {
+  const loader = document.getElementById("school-intro-loader");
+  const bar = document.getElementById("school-progress-bar");
+  const text = document.getElementById("school-progress-text");
+  const num = document.getElementById("school-progress-num");
+
+  if (!loader || !bar) return;
+
+  if (schoolLoaderTimer) clearInterval(schoolLoaderTimer);
+  if (schoolLoaderSafetyTimeout) clearTimeout(schoolLoaderSafetyTimeout);
+
+  loader.classList.remove("loader-hidden");
+
+  let progress = 0;
+  bar.style.width = "0%";
+  if (num) num.innerText = "0%";
+  if (text) text.innerText = "Initializing Agritech Prototype...";
+
+  const statusSteps = [
+    { at: 15, msg: "Initializing Agritech Prototype..." },
+    { at: 38, msg: "Loading SSVEHS Science Project..." },
+    { at: 68, msg: "Connecting Agricultural Registry..." },
+    { at: 88, msg: "Calibrating Machine Matrix..." },
+    { at: 100, msg: "Welcome Judges & Visitors! 🌱" }
+  ];
+
+  schoolLoaderTimer = setInterval(() => {
+    progress += Math.floor(Math.random() * 5) + 3;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(schoolLoaderTimer);
+      if (bar) bar.style.width = "100%";
+      if (num) num.innerText = "100%";
+      if (text) text.innerText = "Welcome Judges & Visitors! 🌱";
+      setTimeout(() => {
+        dismissSchoolLoader();
+      }, 500);
+      return;
+    }
+
+    if (bar) bar.style.width = `${progress}%`;
+    if (num) num.innerText = `${progress}%`;
+
+    const currentStep = statusSteps.slice().reverse().find(s => progress >= s.at);
+    if (currentStep && text) {
+      text.innerText = currentStep.msg;
+    }
+  }, 45);
+
+  // Fallback safety timeout (maximum 3.4s)
+  schoolLoaderSafetyTimeout = setTimeout(() => {
+    dismissSchoolLoader();
+  }, 3400);
+}
+
+function dismissSchoolLoader() {
+  const loader = document.getElementById("school-intro-loader");
+  if (schoolLoaderTimer) clearInterval(schoolLoaderTimer);
+  if (schoolLoaderSafetyTimeout) clearTimeout(schoolLoaderSafetyTimeout);
+  if (loader && !loader.classList.contains("loader-hidden")) {
+    loader.classList.add("loader-hidden");
+  }
+}
+
+function replaySchoolIntro() {
+  initSchoolIntroLoader();
+}
+
+// Auto-run loader on window load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initSchoolIntroLoader);
+} else {
+  initSchoolIntroLoader();
+}
+
+

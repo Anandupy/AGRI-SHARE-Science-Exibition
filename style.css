@@ -3312,3 +3312,288 @@ html, body {
   transition: outline 0.2s ease, box-shadow 0.2s ease !important;
 }
 
+/* ==========================================================================
+   SCHOOL INTRO LOADER — Shree Siddhi Vinayagar English High School (SSVEHS)
+   ========================================================================== */
+#school-intro-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999999;
+  background: radial-gradient(circle at center, #0F2318 0%, #08140E 60%, #030A06 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.65s;
+  overflow: hidden;
+}
+
+#school-intro-loader.loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(1.03);
+}
+
+.school-loader-container {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Glowing Ambient Halo */
+.school-loader-glow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.28) 0%, rgba(202, 138, 4, 0.18) 50%, transparent 75%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: -1;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+/* Logo Ring & Disc */
+.school-logo-ring-wrap {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 1.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.school-logo-orbit-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px dashed rgba(34, 197, 94, 0.5);
+  animation: ringOrbit 12s linear infinite;
+}
+
+.school-logo-glow-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  background: linear-gradient(135deg, #22C55E, #EAB308, #16A34A) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: ringSpin 4s linear infinite;
+}
+
+@keyframes ringSpin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes ringOrbit {
+  100% { transform: rotate(-360deg); }
+}
+
+.school-logo-disc {
+  width: 120px;
+  height: 120px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(34, 197, 94, 0.35);
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.school-logo-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Trust & School Titles */
+.school-trust-pill {
+  display: inline-block;
+  background: rgba(234, 179, 8, 0.16);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  color: #FDE047;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.school-loader-title {
+  color: #FFFFFF;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.school-loader-exhibition {
+  color: #86EFAC;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.school-loader-project {
+  color: #E2E8F0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 1.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+}
+
+.school-loader-project strong {
+  color: #4ADE80;
+}
+
+/* Progress Bar */
+.school-progress-wrapper {
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 1.5rem;
+}
+
+.school-progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.school-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #16A34A, #22C55E, #EAB308);
+  border-radius: 999px;
+  transition: width 0.15s ease-out;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+}
+
+.school-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+}
+
+.school-progress-status {
+  color: #94A3B8;
+  font-weight: 500;
+  text-align: left;
+}
+
+.school-progress-percent {
+  color: #4ADE80;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+/* Skip / Enter Action */
+.school-loader-skip-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+.school-loader-skip-btn:hover {
+  background: #16A34A;
+  border-color: #16A34A;
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+}
+
+/* Header School Badge Chip */
+.school-header-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  padding: 0.2rem 0.65rem 0.2rem 0.35rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.school-header-chip:hover {
+  border-color: #166534;
+  background: #F0FDF4;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(22, 101, 52, 0.12);
+}
+
+.school-header-logo-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #FFFFFF;
+}
+
+.school-header-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #166534;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .school-loader-title {
+    font-size: 1.2rem;
+  }
+  .school-header-text {
+    display: none;
+  }
+}
+

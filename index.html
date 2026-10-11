@@ -16,6 +16,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
+  <link rel="icon" type="image/png" href="assets/school_logo.png">
   <link rel="stylesheet" href="style.css?v=8.0">
 
   <style>
@@ -111,6 +112,51 @@
 </head>
 <body>
 
+  <!-- School Intro Animated Loader Overlay (SSVEHS Science Exhibition) -->
+  <div id="school-intro-loader" role="dialog" aria-modal="true" aria-label="School Showcase Introduction">
+    <div class="school-loader-glow"></div>
+    <div class="school-loader-container">
+      
+      <!-- Rotating Orbit & Floating School Logo -->
+      <div class="school-logo-ring-wrap">
+        <div class="school-logo-orbit-ring"></div>
+        <div class="school-logo-glow-ring"></div>
+        <div class="school-logo-disc">
+          <img src="assets/school_logo.png" alt="Shree Siddhi Vinayagar English High School Logo" width="100" height="100">
+        </div>
+      </div>
+
+      <!-- Trust & School Titles -->
+      <div class="school-trust-pill">P. K. Krishnan Educational Trust's</div>
+      <h2 class="school-loader-title">Shree Siddhi Vinayagar English High School</h2>
+      <div class="school-loader-exhibition">
+        <span>🔬 Science Exhibition 2026 Showcase</span>
+      </div>
+
+      <!-- Project Showcase Card -->
+      <div class="school-loader-project">
+        🌱 Student Innovation: <strong>AGRI-SHARE Platform</strong>
+      </div>
+
+      <!-- Modern Agritech Progress Bar -->
+      <div class="school-progress-wrapper">
+        <div class="school-progress-track">
+          <div class="school-progress-fill" id="school-progress-bar"></div>
+        </div>
+        <div class="school-progress-info">
+          <span class="school-progress-status" id="school-progress-text">Initializing Prototype...</span>
+          <span class="school-progress-percent" id="school-progress-num">0%</span>
+        </div>
+      </div>
+
+      <!-- Quick Enter / Skip Button -->
+      <button class="school-loader-skip-btn" id="btn-skip-loader" onclick="dismissSchoolLoader()">
+        <span>Enter Exhibition Prototype</span> <span>➔</span>
+      </button>
+
+    </div>
+  </div>
+
   <!-- Top Navigation Bar -->
   <header class="app-header">
     <div class="header-container">
@@ -123,6 +169,11 @@
             AGRI-SHARE <span class="badge-tag-sm">Agritech</span>
           </div>
           <div class="brand-sub">Smart Farm Sharing</div>
+        </div>
+        <!-- School Chip in Header -->
+        <div class="school-header-chip" onclick="event.stopPropagation(); replaySchoolIntro();" title="Presented by Shree Siddhi Vinayagar English High School (Click to replay intro)">
+          <img src="assets/school_logo.png" alt="SSVEHS Logo" class="school-header-logo-img">
+          <span class="school-header-text">SSVEHS</span>
         </div>
       </div>
 
@@ -222,8 +273,8 @@
   <div class="science-banner">
     <div class="banner-content">
       <div class="banner-left">
-        <span class="badge-tag">SCHOOL SCIENCE EXHIBITION PROTOTYPE</span>
-        <span>Empowering Indian Farmers through Collaborative Agricultural Mechanization & Google Cloud Backend</span>
+        <span class="badge-tag">SSVEHS • SCIENCE EXHIBITION 2026</span>
+        <span>Presented by Shree Siddhi Vinayagar English High School — Empowering Indian Farmers through Smart Technology</span>
       </div>
       <div>
         <button class="banner-action-btn" onclick="openConfigModal()">📋 Google Setup & Placeholders</button>
