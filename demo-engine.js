@@ -125,17 +125,27 @@
     if (typeof navigateTo === "function") navigateTo("find");
     await sleep(300);
 
-    setHudStatus("📍 Step 1/5: Selecting Village B...");
+    setHudStatus("👤 Step 1/7: Entering Farmer Name: Farmer Suresh...");
+    const nameInput = document.getElementById("find-farmer-name");
+    if (nameInput) await simulateHumanTyping(nameInput, "Farmer Suresh", 35);
+    if (!isDemoRunning) return;
+
+    setHudStatus("📱 Step 2/7: Entering Mobile Number: 9820556677...");
+    const contactInput = document.getElementById("find-contact");
+    if (contactInput) await simulateHumanTyping(contactInput, "9820556677", 40);
+    if (!isDemoRunning) return;
+
+    setHudStatus("📍 Step 3/7: Selecting Location: Village B...");
     const villageSelect = document.getElementById("find-village");
-    await simulateDropdownSelect(villageSelect, "Village B", 600);
+    await simulateDropdownSelect(villageSelect, "Village B", 550);
     if (!isDemoRunning) return;
 
-    setHudStatus("🚜 Step 2/5: Choosing Equipment: Tractor...");
+    setHudStatus("🚜 Step 4/7: Choosing Machinery: Tractor...");
     const equipSelect = document.getElementById("find-equipment");
-    await simulateDropdownSelect(equipSelect, "Tractor", 550);
+    await simulateDropdownSelect(equipSelect, "Tractor", 500);
     if (!isDemoRunning) return;
 
-    setHudStatus("📅 Step 3/5: Setting Required Date...");
+    setHudStatus("📅 Step 5/7: Setting Required Date...");
     const dateInput = document.getElementById("find-date");
     await moveCursorTo(dateInput, 500);
     await triggerClickEffect(dateInput);
@@ -146,12 +156,12 @@
     await sleep(250);
     if (!isDemoRunning) return;
 
-    setHudStatus("⏱️ Step 4/5: Entering Rental Duration (6 Hours)...");
+    setHudStatus("⏱️ Step 6/7: Entering Rental Duration (6 Hours)...");
     const hoursInput = document.getElementById("find-hours");
     await simulateHumanTyping(hoursInput, "6", 60);
     if (!isDemoRunning) return;
 
-    setHudStatus("🔍 Step 5/5: Clicking Search to Query Database...");
+    setHudStatus("🔍 Step 7/7: Searching & Recording Live in Google Sheet...");
     const searchBtn = document.getElementById("btn-submit-search");
     await moveCursorTo(searchBtn, 650);
     await triggerClickEffect(searchBtn);

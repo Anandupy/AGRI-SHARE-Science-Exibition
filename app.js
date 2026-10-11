@@ -635,8 +635,43 @@ async function handleFindEquipmentSubmit(event) {
   const village = document.getElementById("find-village").value;
   const equipment = document.getElementById("find-equipment").value;
   const hours = parseInt(document.getElementById("find-hours").value, 10) || 4;
+  const farmerName = document.getElementById("find-farmer-name") ? document.getElementById("find-farmer-name").value.trim() : (currentUser ? currentUser.name : "Farmer Suresh");
+  const phone = document.getElementById("find-contact") ? document.getElementById("find-contact").value.trim() : (currentUser ? currentUser.mobile : "9820556677");
+  const dateVal = document.getElementById("find-date") ? document.getElementById("find-date").value : new Date().toISOString().split("T")[0];
 
   currentRentalHours = hours;
+
+  // 1. Direct Dual-Sync to Google Form (Instantly writes to 'Find Agricultural Equipment (Responses)' Google Sheet!)
+  try {
+    const formParams = new URLSearchParams();
+    formParams.append("entry.903536382", farmerName || "Farmer Suresh");
+    formParams.append("entry.143014243", village || "Village A");
+    formParams.append("entry.598746884", equipment || "Tractor");
+    formParams.append("entry.870341971", dateVal);
+    formParams.append("entry.826602519", String(hours));
+    formParams.append("entry.309542968", phone || "9820556677");
+
+    fetch("https://docs.google.com/forms/d/1jl6irF4voY0xfR2z84rF4RvMiM8QdpphtqQ_Yjf--DY/formResponse", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formParams.toString()
+    }).catch(e => console.warn("Google Form Find sync notice:", e));
+
+    showToast(`✅ Requirement for ${equipment} recorded directly in Find Requests Google Sheet!`, "success");
+  } catch (errForm) {
+    console.warn("Direct Google Form Find sync error:", errForm);
+  }
+
+  // If farmer is not logged in, auto-login with this name & role
+  if (!currentUser && farmerName) {
+    setCurrentUser({
+      name: farmerName,
+      mobile: phone,
+      village: village,
+      role: "Farmer"
+    });
+  }
 
   // Check if live Apps Script mode is configured and enabled
   if (!AGRI_CONFIG.IS_DEMO_MODE && AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL && !AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes("SAMPLE")) {

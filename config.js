@@ -17,6 +17,8 @@ const AGRI_CONFIG = {
 
   // 4. Exact Find Requests Google Sheet ID (from your browser URL)
   GOOGLE_FIND_SHEET_ID: "1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY",
+  GOOGLE_FIND_SHEET_GID: "1857933895",
+  GOOGLE_FIND_SHEET_URL: "https://docs.google.com/spreadsheets/d/1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY/edit?resourcekey=&gid=1857933895#gid=1857933895",
 
   // 5. Google Apps Script Web App Deployment URL for live search & sync
   GOOGLE_APPS_SCRIPT_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbzzEqB8cxm5FyTNCM42nM5C8DydD90hXiQz3kV9ufHQvN05X_l2FHIj8t3OIyktBzfnrQ/exec",
