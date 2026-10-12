@@ -2510,7 +2510,13 @@ function changeLanguage(langCode) {
     window.applyLanguage(langCode);
     const dict = window.TRANSLATIONS ? window.TRANSLATIONS[langCode] : null;
     const name = dict ? dict.langName : langCode.toUpperCase();
-    showToast(`🌐 भाषा बदली: ${name} (${langCode.toUpperCase()})`, "success");
+    if (langCode === "en") {
+      showToast("🌐 Language switched to: English (EN)", "success");
+    } else if (langCode === "mr") {
+      showToast("🌐 भाषा बदलली: मराठी (MR)", "success");
+    } else {
+      showToast(`🌐 भाषा बदली: ${name} (${langCode.toUpperCase()})`, "success");
+    }
   } else {
     showToast(`Language switched to ${langCode.toUpperCase()}.`, "success");
   }

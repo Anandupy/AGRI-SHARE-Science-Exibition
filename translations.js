@@ -680,6 +680,45 @@
     const emptyPh = document.getElementById("ai-empty-placeholder");
     if (emptyPh) emptyPh.innerHTML = `<span style="font-size: 2rem;">🌾</span><p>${dict.aiEmptyPh || 'Click any question above or type your query. Kisan AI will provide instant scientific advice.'}</p>`;
 
+    // 11. Role Tabs in Login Modal
+    const tabLoginOwner = document.querySelector("#tab-login-owner span:nth-child(2)");
+    if (tabLoginOwner) tabLoginOwner.textContent = langCode === "en" ? "Equipment Owner" : (langCode === "mr" ? "मशीन मालक" : "मशीन मालिक");
+    const tabLoginFarmer = document.querySelector("#tab-login-farmer span:nth-child(2)");
+    if (tabLoginFarmer) tabLoginFarmer.textContent = langCode === "en" ? "Farmer / Hirer" : (langCode === "mr" ? "भाडेकरू शेतकरी" : "किराएदार किसान");
+
+    // 12. Quick FAQ Topic Chips
+    const chipTranslations = {
+      en: [
+        "🌾 Rotavator vs Cultivator?",
+        "🚜 Tractor diesel saving tips?",
+        "🌾 Paddy harvester benefits?",
+        "💰 Buy vs Rent financial logic?",
+        "💦 Sprayer time & labor savings?",
+        "📅 Kharif to Rabi machine timing?"
+      ],
+      hi: [
+        "🌾 रोटावेटर vs कल्टीवेटर?",
+        "🚜 ट्रैक्टर डीजल बचत टिप्स?",
+        "🌾 धान हार्वेस्टर के फायदे?",
+        "💰 खरीद vs किराया वित्तीय गणित?",
+        "💦 स्प्रेयर से समय व लेबर बचत?",
+        "📅 खरीफ से रबी मशीन टाइमिंग?"
+      ],
+      mr: [
+        "🌾 रोटाव्हेटर vs कल्टिव्हेटर?",
+        "🚜 डिझेल बचत टिप्स?",
+        "🌾 भात हार्व्हेस्टरचे फायदे?",
+        "💰 खरेदी vs भाडे गणित?",
+        "💦 स्प्रेअर मजुरी बचत?",
+        "📅 खरीप ते रब्बी नियोजन?"
+      ]
+    };
+    const activeChips = chipTranslations[langCode] || chipTranslations["en"];
+    for (let i = 1; i <= 6; i++) {
+      const chipEl = document.getElementById(`chip-qa-${i}`);
+      if (chipEl && activeChips[i - 1]) chipEl.innerText = activeChips[i - 1];
+    }
+
     // Notify listeners
     document.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang: langCode, dict: dict } }));
   }
@@ -689,7 +728,13 @@
     applyLanguage(langCode);
     const dict = TRANSLATIONS[langCode] || TRANSLATIONS["en"];
     if (typeof showToast === "function") {
-      showToast(`🌐 भाषा बदली: ${dict.langName} (${langCode.toUpperCase()})`, "success");
+      if (langCode === "en") {
+        showToast("🌐 Language switched to: English (EN)", "success");
+      } else if (langCode === "mr") {
+        showToast("🌐 भाषा बदलली: मराठी (MR)", "success");
+      } else {
+        showToast(`🌐 भाषा बदली: ${dict.langName} (${langCode.toUpperCase()})`, "success");
+      }
     }
   };
 

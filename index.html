@@ -171,11 +171,11 @@
         <!-- Dual Role Portal Area: Owner vs Farmer -->
         <div class="user-auth-area" id="user-auth-area">
           <div id="auth-logged-out" class="portal-tag-group">
-            <button class="portal-pill-btn owner-pill" id="btn-header-owner-login" onclick="openLoginModalWithRole('owner')" title="Equipment Owner Portal (मशीन मालिक)">
+            <button class="portal-pill-btn owner-pill" id="btn-header-owner-login" onclick="openLoginModalWithRole('owner')" title="Equipment Owner Portal">
               <span class="portal-icon">🚜</span>
               <span class="portal-label">Owner</span>
             </button>
-            <button class="portal-pill-btn farmer-pill" id="btn-header-farmer-login" onclick="openLoginModalWithRole('farmer')" title="Farmer / Hirer Portal (किराएदार किसान)">
+            <button class="portal-pill-btn farmer-pill" id="btn-header-farmer-login" onclick="openLoginModalWithRole('farmer')" title="Farmer / Hirer Portal">
               <span class="portal-icon">🌾</span>
               <span class="portal-label">Farmer</span>
             </button>
@@ -1469,22 +1469,22 @@
           </div>
 
           <div class="ai-faq-chips-grid">
-            <button type="button" class="ai-chip-btn" id="chip-qa-1" onclick="askKisanAiQuestion('Wheat buwai ke liye Rotavator better hai ya Cultivator?')">
+            <button type="button" class="ai-chip-btn" id="chip-qa-1" onclick="askKisanAiQuestion('rotavator_vs_cultivator')">
               🌾 Rotavator vs Cultivator?
             </button>
-            <button type="button" class="ai-chip-btn" id="chip-qa-2" onclick="askKisanAiQuestion('Tractor diesel kharcha 25% kaise kam kare?')">
+            <button type="button" class="ai-chip-btn" id="chip-qa-2" onclick="askKisanAiQuestion('diesel_saving')">
               🚜 Tractor diesel saving tips?
             </button>
-            <button type="button" class="ai-chip-btn" id="chip-qa-3" onclick="askKisanAiQuestion('Paddy combine harvester rent karne ke fayde?')">
+            <button type="button" class="ai-chip-btn" id="chip-qa-3" onclick="askKisanAiQuestion('paddy_harvester')">
               🌾 Paddy harvester benefits?
             </button>
-            <button type="button" class="ai-chip-btn" id="chip-qa-4" onclick="askKisanAiQuestion('Machine khareedne se acha rent karna kyu hai?')">
+            <button type="button" class="ai-chip-btn" id="chip-qa-4" onclick="askKisanAiQuestion('buy_vs_rent')">
               💰 Buy vs Rent financial logic?
             </button>
-            <button type="button" class="ai-chip-btn" id="chip-qa-5" onclick="askKisanAiQuestion('Spraying me kitna time aur labor bachega?')">
+            <button type="button" class="ai-chip-btn" id="chip-qa-5" onclick="askKisanAiQuestion('spraying_savings')">
               💦 Sprayer time & labor savings?
             </button>
-            <button type="button" class="ai-chip-btn" id="chip-qa-6" onclick="askKisanAiQuestion('Kharif se Rabi crop transition timing kaise plan kare?')">
+            <button type="button" class="ai-chip-btn" id="chip-qa-6" onclick="askKisanAiQuestion('seasonal_calendar')">
               📅 Kharif to Rabi machine timing?
             </button>
           </div>
@@ -1650,10 +1650,10 @@
       <!-- Architectural Role Tabs -->
       <div class="role-tab-container">
         <button type="button" class="role-tab-btn owner-tab active" id="tab-login-owner" onclick="switchLoginRoleTab('owner')">
-          <span>🚜</span> <span>Equipment Owner (मशीन मालिक)</span>
+          <span>🚜</span> <span>Equipment Owner</span>
         </button>
         <button type="button" class="role-tab-btn farmer-tab" id="tab-login-farmer" onclick="switchLoginRoleTab('farmer')">
-          <span>🌾</span> <span>Farmer / Hirer (किराएदार किसान)</span>
+          <span>🌾</span> <span>Farmer / Hirer</span>
         </button>
       </div>
 
@@ -1961,7 +1961,7 @@
   </div>
 
   <!-- Floating Kisan AI Assistant Pill -->
-  <div id="floating-kisan-ai" class="floating-ai-pill" onclick="navigateTo('ai')" title="Open Kisan AI Advisor (किसान AI सलाहकार)">
+  <div id="floating-kisan-ai" class="floating-ai-pill" onclick="navigateTo('ai')" title="Open Kisan AI Advisor">
     <span class="ai-sparkle-dot"></span>
     <span class="ai-float-icon">🤖</span>
     <span class="ai-float-label">Kisan AI</span>
