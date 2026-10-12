@@ -1291,6 +1291,49 @@ function applyCalculatorPreset(type) {
   calculateEconomics();
 }
 
+// Animated Number Counter State
+const calcAnimState = {};
+
+function animateCalcNumber(elemId, targetVal, prefix = "₹", suffix = "", duration = 350) {
+  const elem = document.getElementById(elemId);
+  if (!elem) return;
+
+  const currentVal = calcAnimState[elemId] !== undefined ? calcAnimState[elemId] : targetVal;
+  if (Math.abs(currentVal - targetVal) < 1) {
+    elem.innerText = `${prefix}${Math.round(targetVal).toLocaleString("en-IN")}${suffix}`;
+    calcAnimState[elemId] = targetVal;
+    return;
+  }
+
+  if (elem._animRaf) cancelAnimationFrame(elem._animRaf);
+
+  const startTime = performance.now();
+  const startVal = currentVal;
+
+  elem.classList.remove("num-ticker-flash");
+  void elem.offsetWidth;
+  elem.classList.add("num-ticker-flash");
+
+  function frame(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = startVal + (targetVal - startVal) * ease;
+
+    elem.innerText = `${prefix}${Math.round(val).toLocaleString("en-IN")}${suffix}`;
+
+    if (progress < 1) {
+      elem._animRaf = requestAnimationFrame(frame);
+    } else {
+      calcAnimState[elemId] = targetVal;
+      elem.innerText = `${prefix}${Math.round(targetVal).toLocaleString("en-IN")}${suffix}`;
+      elem._animRaf = null;
+    }
+  }
+
+  elem._animRaf = requestAnimationFrame(frame);
+}
+
 function syncCalculatorSlider(inputId, val) {
   const numInput = document.getElementById(inputId);
   if (numInput) numInput.value = val;
@@ -1325,45 +1368,55 @@ function calculateEconomics() {
   // Break-Even Hours
   const breakEvenHours = hiringRate > 0 ? Math.round(annualOwnershipCost / hiringRate) : 0;
 
-  // Update UI Elements
-  const rentalValElem = document.getElementById("res-rental-cost");
-  if (rentalValElem) rentalValElem.innerText = `₹${Math.round(annualRentalCost).toLocaleString('en-IN')}`;
+  // Smooth Animated Number Tickers
+  animateCalcNumber("res-rental-cost", annualRentalCost);
+  animateCalcNumber("res-ownership-cost", annualOwnershipCost);
+  animateCalcNumber("res-depr-item", annualDepreciation);
+  animateCalcNumber("res-maint-item", maintenanceCost);
+  animateCalcNumber("res-oper-item", operatingCost);
+  animateCalcNumber("res-savings-val", netSavings, "₹", " / yr");
+  animateCalcNumber("calc-breakeven-hours", breakEvenHours, "", " hours / year");
 
+  // Visualizer Numbers
+  animateCalcNumber("vis-cost-buying", annualOwnershipCost, "₹", " / yr");
+  animateCalcNumber("vis-cost-group", perFarmerOwnershipCost, "₹", " / yr");
+  animateCalcNumber("vis-cost-renting", annualRentalCost, "₹", " / yr");
+  animateCalcNumber("res-capital-avoided", purchasePrice, "₹", "");
+
+  // Update Formula Breakdowns
   const rentalFormulaElem = document.getElementById("res-rental-formula");
-  if (rentalFormulaElem) rentalFormulaElem.innerText = `${annualHours} hours × ₹${hiringRate} / hr`;
-
-  const ownershipValElem = document.getElementById("res-ownership-cost");
-  if (ownershipValElem) ownershipValElem.innerText = `₹${Math.round(annualOwnershipCost).toLocaleString('en-IN')}`;
+  if (rentalFormulaElem) {
+    rentalFormulaElem.innerText = `${annualHours} hours × ₹${hiringRate} / hr`;
+  }
 
   const ownershipFormulaElem = document.getElementById("res-ownership-formula");
-  if (ownershipFormulaElem) ownershipFormulaElem.innerText = `Depreciation (₹${Math.round(annualDepreciation).toLocaleString('en-IN')}) + Maintenance (₹${Math.round(maintenanceCost).toLocaleString('en-IN')}) + Operating (₹${Math.round(operatingCost).toLocaleString('en-IN')})`;
+  if (ownershipFormulaElem) {
+    ownershipFormulaElem.innerText = `Depreciation (₹${Math.round(annualDepreciation).toLocaleString('en-IN')}) + Maintenance (₹${Math.round(maintenanceCost).toLocaleString('en-IN')}) + Operating (₹${Math.round(operatingCost).toLocaleString('en-IN')})`;
+  }
 
-  const deprItemElem = document.getElementById("res-depr-item");
-  if (deprItemElem) deprItemElem.innerText = `₹${Math.round(annualDepreciation).toLocaleString('en-IN')}`;
-
-  const maintItemElem = document.getElementById("res-maint-item");
-  if (maintItemElem) maintItemElem.innerText = `₹${Math.round(maintenanceCost).toLocaleString('en-IN')}`;
-
-  const operItemElem = document.getElementById("res-oper-item");
-  if (operItemElem) operItemElem.innerText = `₹${Math.round(operatingCost).toLocaleString('en-IN')}`;
-
-  const savingsValElem = document.getElementById("res-savings-val");
-  if (savingsValElem) savingsValElem.innerText = `₹${Math.round(netSavings).toLocaleString('en-IN')} / yr`;
-
+  // Update Savings Text
   const savingsTextElem = document.getElementById("res-savings-text");
   if (savingsTextElem) {
     savingsTextElem.innerHTML = `
-      By renting for ${annualHours} hours instead of individually purchasing, the farmer saves 
+      By renting for <strong>${annualHours} hours</strong> instead of individually purchasing, the farmer saves 
       <strong>₹${Math.round(netSavings).toLocaleString('en-IN')} every year (${savingsPct.toFixed(1)}% savings)</strong>!
       If <strong>${groupFarmers} farmers</strong> pool together to share ownership costs, the estimated cost per farmer is 
       <strong>₹${Math.round(perFarmerOwnershipCost).toLocaleString('en-IN')} / year</strong>.
     `;
   }
 
-  // Update Break-Even Gauge
-  const beHoursElem = document.getElementById("calc-breakeven-hours");
-  if (beHoursElem) beHoursElem.innerText = `${breakEvenHours} hours / year`;
+  // Badges & Counter Chips
+  const pctBadge = document.getElementById("res-savings-pct-badge");
+  if (pctBadge) {
+    pctBadge.innerText = `⚡ ${savingsPct.toFixed(1)}% Cost Reduction`;
+  }
 
+  const liquidityBadge = document.getElementById("res-liquidity-saved");
+  if (liquidityBadge) {
+    liquidityBadge.innerText = `100% Capital Safe`;
+  }
+
+  // Update Break-Even Gauge & Needle Pin
   const beDescElem = document.getElementById("calc-breakeven-desc");
   if (beDescElem) {
     if (annualHours < breakEvenHours) {
@@ -1379,16 +1432,85 @@ function calculateEconomics() {
   const thresholdLabel = document.getElementById("be-threshold-label");
   if (thresholdLabel) thresholdLabel.innerText = `Threshold: ${breakEvenHours} hrs`;
 
+  const thresholdMark = document.getElementById("be-threshold-mark");
+  if (thresholdMark) thresholdMark.innerText = `100% (${breakEvenHours}h)`;
+
   const meterBar = document.getElementById("calc-meter-bar");
-  if (meterBar && breakEvenHours > 0) {
-    const pct = Math.min(Math.round((annualHours / breakEvenHours) * 100), 100);
-    meterBar.style.width = `${pct}%`;
+  const meterPin = document.getElementById("calc-meter-pin");
+  const pinBubble = document.getElementById("calc-pin-bubble");
+
+  let pctUsage = 0;
+  if (breakEvenHours > 0) {
+    pctUsage = Math.round((annualHours / breakEvenHours) * 100);
+    const clampedPct = Math.min(pctUsage, 100);
+    if (meterBar) {
+      meterBar.style.width = `${clampedPct}%`;
+      if (pctUsage <= 40) {
+        meterBar.style.background = "linear-gradient(90deg, #16a34a 0%, #22c55e 100%)";
+      } else if (pctUsage <= 80) {
+        meterBar.style.background = "linear-gradient(90deg, #16a34a 0%, #eab308 100%)";
+      } else {
+        meterBar.style.background = "linear-gradient(90deg, #eab308 0%, #ef4444 100%)";
+      }
+    }
+    if (meterPin) meterPin.style.left = `${clampedPct}%`;
+    if (pinBubble) pinBubble.innerText = `${annualHours} hrs`;
   }
 
-  const meterCaption = document.getElementById("calc-meter-caption");
-  if (meterCaption && breakEvenHours > 0) {
-    const pct = Math.round((annualHours / breakEvenHours) * 100);
-    meterCaption.innerHTML = `Farmer operates at <strong>${pct}% of break-even usage</strong>. Purchasing privately causes capital lockup.`;
+  // Dynamic Status Alert Box
+  const statusAlert = document.getElementById("calc-status-alert");
+  const statusIcon = document.getElementById("calc-status-icon");
+  const statusText = document.getElementById("calc-status-text");
+
+  if (statusAlert && statusText) {
+    if (annualHours < breakEvenHours) {
+      statusAlert.style.background = "#f0fdf4";
+      statusAlert.style.borderColor = "#86efac";
+      if (statusIcon) statusIcon.innerText = "🎉";
+      statusText.innerHTML = `<strong>HIRING IS ALWAYS CHEAPER!</strong> Farmer operates at only <strong>${pctUsage}%</strong> of break-even usage. Capital remains free from depreciation and bank debt.`;
+    } else {
+      statusAlert.style.background = "#fffbeb";
+      statusAlert.style.borderColor = "#fde68a";
+      if (statusIcon) statusIcon.innerText = "⚡";
+      statusText.innerHTML = `<strong>HEAVY UTILIZATION (${annualHours} hrs):</strong> Exceeds break-even threshold (${breakEvenHours} hrs). Custom hiring centre or community co-op pooling is highly cost-effective!`;
+    }
+  }
+
+  // Dynamic 3-Way Real-Time Cost Visualizer Bars
+  const maxCompCost = Math.max(annualOwnershipCost, annualRentalCost, 1);
+  const buyingBar = document.getElementById("vis-fill-buying");
+  const buyingPct = document.getElementById("vis-pct-buying");
+  if (buyingBar) {
+    const w = Math.min(Math.round((annualOwnershipCost / maxCompCost) * 100), 100);
+    buyingBar.style.width = `${w}%`;
+  }
+  if (buyingPct) buyingPct.innerText = `100% (Baseline)`;
+
+  const groupBar = document.getElementById("vis-fill-group");
+  const groupPct = document.getElementById("vis-pct-group");
+  const farmersCount = document.getElementById("vis-farmers-count");
+  if (groupBar) {
+    const w = Math.min(Math.round((perFarmerOwnershipCost / maxCompCost) * 100), 100);
+    groupBar.style.width = `${Math.max(w, 12)}%`;
+  }
+  if (groupPct) {
+    const groupRatio = annualOwnershipCost > 0 ? (perFarmerOwnershipCost / annualOwnershipCost) * 100 : 20;
+    groupPct.innerText = `${groupRatio.toFixed(0)}% of solo cost`;
+  }
+  if (farmersCount) farmersCount.innerText = groupFarmers;
+
+  const rentingBar = document.getElementById("vis-fill-renting");
+  const rentingPct = document.getElementById("vis-pct-renting");
+  if (rentingBar) {
+    const w = Math.min(Math.round((annualRentalCost / maxCompCost) * 100), 100);
+    rentingBar.style.width = `${Math.max(w, 14)}%`;
+  }
+  if (rentingPct) {
+    if (netSavings > 0) {
+      rentingPct.innerText = `⭐ ${savingsPct.toFixed(1)}% SAVINGS`;
+    } else {
+      rentingPct.innerText = `Pay-As-You-Use`;
+    }
   }
 }
 

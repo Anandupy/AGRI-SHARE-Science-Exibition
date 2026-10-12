@@ -940,12 +940,13 @@
           <p class="card-subtext" style="margin-bottom: 1.25rem;">Adjust parameters to compare rental cost, individual ownership, and group sharing.</p>
 
           <!-- Quick Presets -->
+          <!-- Quick Presets -->
           <div class="calc-presets-row">
             <span class="preset-label">Machine Presets:</span>
-            <button class="chip-btn active" id="preset-rotavator-btn" onclick="applyCalculatorPreset('Rotavator')">Rotavator (₹5L)</button>
-            <button class="chip-btn" id="preset-tractor-btn" onclick="applyCalculatorPreset('Tractor')">Tractor (₹8L)</button>
-            <button class="chip-btn" id="preset-harvester-btn" onclick="applyCalculatorPreset('Harvester')">Harvester (₹22L)</button>
-            <button class="chip-btn" id="preset-sprayer-btn" onclick="applyCalculatorPreset('Sprayer')">Sprayer (₹1.2L)</button>
+            <button class="chip-btn active" id="preset-rotavator-btn" onclick="applyCalculatorPreset('Rotavator')">🚜 Rotavator (₹5L)</button>
+            <button class="chip-btn" id="preset-tractor-btn" onclick="applyCalculatorPreset('Tractor')">🚜 Tractor (₹8L)</button>
+            <button class="chip-btn" id="preset-harvester-btn" onclick="applyCalculatorPreset('Harvester')">🌾 Harvester (₹22L)</button>
+            <button class="chip-btn" id="preset-sprayer-btn" onclick="applyCalculatorPreset('Sprayer')">💧 Sprayer (₹1.2L)</button>
           </div>
 
           <div class="calc-form-grid">
@@ -1017,18 +1018,89 @@
             </div>
           </div>
 
-          <div style="margin-top: 1.5rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+          <div class="meter-track-container">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem;">
               <span>0 hrs</span>
               <span id="be-current-farmer-label" style="color: var(--primary-color);">Farmer Usage: 30 hrs</span>
               <span id="be-threshold-label">Threshold: 150 hrs</span>
             </div>
             <div class="meter-track">
-              <div class="meter-bar-fill" id="calc-meter-bar" style="width: 20%;"></div>
+              <div class="meter-bar-fill" id="calc-meter-bar" style="width: 20%;">
+                <span class="meter-shimmer-fx"></span>
+              </div>
+              <div class="meter-pin-marker" id="calc-meter-pin" style="left: 20%;">
+                <div class="meter-pin-bubble" id="calc-pin-bubble">30 hrs</div>
+                <div class="meter-pin-arrow">▼</div>
+              </div>
             </div>
-            <p style="font-size: 0.82rem; color: var(--text-subtle); margin-top: 0.5rem;" id="calc-meter-caption">
-              Farmer operates at only 20% of break-even usage. Individual purchase will cause an annual loss.
-            </p>
+            <div class="meter-ticks-row">
+              <span>0% (0h)</span>
+              <span>25%</span>
+              <span>50%</span>
+              <span>75%</span>
+              <span id="be-threshold-mark">100% (150h)</span>
+            </div>
+          </div>
+
+          <div class="calc-status-alert" id="calc-status-alert">
+            <span class="calc-status-icon" id="calc-status-icon">🎉</span>
+            <div class="calc-status-text" id="calc-status-text">
+              <strong>HIRING IS ALWAYS CHEAPER!</strong> Farmer operates at only 20% of break-even usage.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-Time 3-Way Economic Comparison Visualizer (Live Animated Bars) -->
+      <div class="card calc-visualizer-card">
+        <div class="visualizer-header">
+          <div>
+            <h3 class="visualizer-title">📊 Real-Time Annual Cost Visualizer (Side-by-Side Comparison)</h3>
+            <p class="visualizer-subtitle">Dynamic graphical comparison scaling instantly with your sliders</p>
+          </div>
+          <span class="visualizer-live-tag">
+            <span class="live-dot-pulse"></span> LIVE SIMULATION
+          </span>
+        </div>
+
+        <div class="visualizer-bars-list">
+          <!-- Bar 1: Solo Buying -->
+          <div class="vis-bar-item buying-vis-item">
+            <div class="vis-bar-info">
+              <span class="vis-bar-label"><span class="vis-icon">💸</span> Solo Buying (100% Capital Burden)</span>
+              <span class="vis-bar-cost" id="vis-cost-buying">₹1,20,000 / yr</span>
+            </div>
+            <div class="vis-track">
+              <div class="vis-fill fill-buying" id="vis-fill-buying" style="width: 100%;">
+                <span class="vis-bar-pct" id="vis-pct-buying">100% (Full Cost)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bar 2: Group Sharing -->
+          <div class="vis-bar-item group-vis-item">
+            <div class="vis-bar-info">
+              <span class="vis-bar-label"><span class="vis-icon">👥</span> Group Sharing (<span id="vis-farmers-count">5</span> Farmers Co-op)</span>
+              <span class="vis-bar-cost" id="vis-cost-group">₹24,000 / yr</span>
+            </div>
+            <div class="vis-track">
+              <div class="vis-fill fill-group" id="vis-fill-group" style="width: 20%;">
+                <span class="vis-bar-pct" id="vis-pct-group">20% of solo cost</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bar 3: AGRI-SHARE Rental -->
+          <div class="vis-bar-item renting-vis-item">
+            <div class="vis-bar-info">
+              <span class="vis-bar-label"><span class="vis-icon">🚜</span> AGRI-SHARE Rental (Pay-As-You-Use)</span>
+              <span class="vis-bar-cost highlight-cost" id="vis-cost-renting">₹24,000 / yr</span>
+            </div>
+            <div class="vis-track">
+              <div class="vis-fill fill-renting" id="vis-fill-renting" style="width: 20%;">
+                <span class="vis-bar-pct" id="vis-pct-renting">⭐ 80.0% SAVINGS</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1089,16 +1161,33 @@
 
       <!-- C. Group Sharing & Net Savings Banner -->
       <div class="savings-highlight-banner">
-        <div>
-          <div class="banner-heading">C. Group Sharing & Total Savings</div>
+        <div class="savings-banner-left">
+          <div class="banner-badge-pill">
+            <span class="coin-bounce-icon">🪙</span>
+            <span>SMART ECONOMICS VERIFIED</span>
+          </div>
+          <div class="banner-heading">C. Group Sharing & Total Savings Analysis</div>
           <p id="res-savings-text" style="font-size: 0.95rem; opacity: 0.95; max-width: 680px;">
             By renting instead of individually purchasing, the farmer saves <strong>₹96,000 every year (80.0% savings)</strong>!
             If 5 farmers share ownership costs, the estimated cost per farmer is <strong>₹24,000 / year</strong>.
           </p>
+          <div class="savings-metrics-chips">
+            <div class="savings-chip">
+              <span class="chip-lbl">Capital Debt Avoided:</span>
+              <strong id="res-capital-avoided">₹5,00,000</strong>
+            </div>
+            <div class="savings-chip">
+              <span class="chip-lbl">Liquidity Preserved:</span>
+              <strong id="res-liquidity-saved">100%</strong>
+            </div>
+          </div>
         </div>
-        <div style="text-align: right;">
-          <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9;">Estimated Annual Savings</div>
-          <div class="savings-number" id="res-savings-val">₹96,000 / yr</div>
+        <div class="savings-banner-right">
+          <div class="savings-counter-wrap">
+            <div class="savings-counter-label">Estimated Annual Savings</div>
+            <div class="savings-number" id="res-savings-val">₹96,000 / yr</div>
+            <div class="savings-pct-badge" id="res-savings-pct-badge">⚡ 80.0% Cost Reduction</div>
+          </div>
         </div>
       </div>
 
