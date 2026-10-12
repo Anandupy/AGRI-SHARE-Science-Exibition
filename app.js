@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Handle URL hash navigation
   const initialHash = window.location.hash.replace("#", "").replace("page-", "");
-  if (initialHash && ["find", "list", "available", "calculator", "calendar", "about"].includes(initialHash)) {
+  if (initialHash && ["find", "list", "available", "calculator", "calendar", "about", "ai"].includes(initialHash)) {
     navigateTo(initialHash);
   } else if (initialHash === "owner-dashboard") {
     openOwnerDashboardModal();
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash.replace("#", "").replace("page-", "");
-    if (hash && ["home", "find", "list", "available", "calculator", "calendar", "about"].includes(hash)) {
+    if (hash && ["home", "find", "list", "available", "calculator", "calendar", "about", "ai"].includes(hash)) {
       navigateTo(hash);
     } else if (hash === "owner-dashboard") {
       openOwnerDashboardModal();
@@ -423,7 +423,7 @@ function resetDatabaseToDefault() {
 // =========================================================================
 
 function navigateTo(pageId) {
-  const validPages = ["home", "find", "list", "available", "calculator", "calendar", "about"];
+  const validPages = ["home", "find", "list", "available", "calculator", "calendar", "about", "ai"];
   if (!validPages.includes(pageId)) pageId = "home";
 
   // Hide all sections
@@ -2506,7 +2506,14 @@ function showToast(message, type = "success") {
 }
 
 function changeLanguage(langCode) {
-  showToast(`Language switched to ${langCode.toUpperCase()}. (Science Exhibition Prototype)`, "success");
+  if (typeof window.applyLanguage === "function") {
+    window.applyLanguage(langCode);
+    const dict = window.TRANSLATIONS ? window.TRANSLATIONS[langCode] : null;
+    const name = dict ? dict.langName : langCode.toUpperCase();
+    showToast(`🌐 भाषा बदली: ${name} (${langCode.toUpperCase()})`, "success");
+  } else {
+    showToast(`Language switched to ${langCode.toUpperCase()}.`, "success");
+  }
 }
 
 // Global modal backdrop click & Escape key handlers

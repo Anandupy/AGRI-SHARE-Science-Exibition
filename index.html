@@ -186,6 +186,7 @@
         <button class="nav-btn" id="nav-available" onclick="navigateTo('available')" title="Available Equipment Database">Available</button>
         <button class="nav-btn" id="nav-calculator" onclick="navigateTo('calculator')" title="Cost Calculator & Savings">Calculator</button>
         <button class="nav-btn" id="nav-calendar" onclick="navigateTo('calendar')" title="Crop Calendar & Seasonal Recommendations">Calendar</button>
+        <button class="nav-btn" id="nav-ai" onclick="navigateTo('ai')" title="Kisan AI Smart Agritech Advisor">🤖 Kisan AI</button>
         <button class="nav-btn" id="nav-about" onclick="navigateTo('about')" title="About AGRI-SHARE Project">About</button>
 
         <!-- Mobile Drawer Extra Actions (Shown only inside mobile drawer) -->
@@ -323,6 +324,9 @@
             </button>
             <button class="btn btn-accent" onclick="navigateTo('calendar')" id="btn-hero-calendar">
               <span>📅</span> Crop Calendar
+            </button>
+            <button class="btn btn-ai-sparkle" onclick="navigateTo('ai')" id="btn-hero-ai" title="Get AI-powered machinery recommendations and audio advisory">
+              <span>🤖</span> Kisan AI Advisor
             </button>
           </div>
 
@@ -1409,6 +1413,144 @@
       </div>
     </section>
 
+    <!-- ====================================================================
+         PAGE 8: KISAN AI — SMART AGRITECH ADVISOR
+         ==================================================================== -->
+    <section id="page-ai" class="page-section">
+      <div class="page-header-row">
+        <div>
+          <div class="section-tag-pill">🤖 Artificial Intelligence in Agriculture</div>
+          <h1 class="page-title">🤖 Kisan AI — Smart Agritech Advisor</h1>
+          <p class="page-subtitle">Intelligent machinery sequencing, acreage-to-hour calculations, cost optimization & voice advisory for smallholder farmers.</p>
+        </div>
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="navigateTo('find')">
+            <span>🚜</span> <span>Go to Find Equipment →</span>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="navigateTo('calculator')">
+            <span>💰</span> <span>Savings Calculator →</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="two-column-layout">
+        <!-- Left: Smart Machinery Recommender -->
+        <div class="card">
+          <div class="card-header-with-badge">
+            <h2 class="card-title">🌱 स्मार्ट फसल व मशीन कैलकुलेटर (AI Recommender)</h2>
+            <span class="ai-live-badge"><span class="demo-pulse-dot"></span> LIVE AI</span>
+          </div>
+          <p class="card-subtext" style="margin-bottom: 1.25rem;">
+            Select your crop, acreage, farming stage, and soil type to get scientific machine sizing and instant cost savings.
+          </p>
+
+          <form id="ai-recommender-form" onsubmit="event.preventDefault(); calculateKisanRecommendation();">
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="ai-crop-select">Crop Type (फसल का प्रकार) <span class="required">*</span></label>
+                <select id="ai-crop-select" required>
+                  <option value="wheat" selected>Wheat (गेहूं / गहू)</option>
+                  <option value="paddy">Paddy / Rice (धान / भात)</option>
+                  <option value="cotton">Cotton (कपास / कापूस)</option>
+                  <option value="sugarcane">Sugarcane (गन्ना / ऊस)</option>
+                  <option value="soybean">Soybean (सोयाबीन)</option>
+                </select>
+              </div>
+
+              <div class="form-group half">
+                <label for="ai-stage-select">Farming Stage (खेती का चरण) <span class="required">*</span></label>
+                <select id="ai-stage-select" required>
+                  <option value="tillage" selected>Primary / Secondary Tillage (जुताई / नांगरणी)</option>
+                  <option value="sowing">Precision Sowing & Planting (बुवाई / पेरणी)</option>
+                  <option value="spraying">Crop Protection Spraying (छिड़काव / फवारणी)</option>
+                  <option value="harvesting">Harvesting & Residue Mgmt (कटाई / कापणी)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="ai-acres-input">Farm Size in Acres (जमीन - एकड़) <span class="required">*</span></label>
+                <input type="number" id="ai-acres-input" min="0.5" max="50" step="0.5" value="3" required>
+              </div>
+
+              <div class="form-group half">
+                <label for="ai-soil-select">Soil Type (मिट्टी का प्रकार) <span class="required">*</span></label>
+                <select id="ai-soil-select" required>
+                  <option value="black">Black Heavy Soil (काली भारी मिट्टी)</option>
+                  <option value="loam" selected>Loamy Soil (दोमट उपजाऊ मिट्टी)</option>
+                  <option value="sandy">Sandy Soil (रेतीली हल्की मिट्टी)</option>
+                  <option value="red">Red Soil (लाल कंकरीली मिट्टी)</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+              <button type="submit" class="btn btn-primary" id="btn-calc-ai-rec" style="width: 100%;">
+                <span>⚡</span> <span>Get Instant AI Recommendation (एआई सलाह प्राप्त करें)</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Results Panel -->
+          <div id="ai-results-panel">
+            <!-- Populated dynamically by kisan-ai.js -->
+          </div>
+        </div>
+
+        <!-- Right: Poocho Kisan AI (Interactive Agritech Q&A) -->
+        <div class="card">
+          <div class="card-header-with-badge">
+            <h2 class="card-title">💬 पूछो किसान AI (Ask Agritech Questions)</h2>
+            <span class="ai-sparkle-pill">✨ Voice & Q&A</span>
+          </div>
+          <p class="card-subtext" style="margin-bottom: 1.25rem;">
+            Ask questions about machinery fuel efficiency, implement selection, or seasonal crop timing in your language.
+          </p>
+
+          <div class="ai-query-input-wrap">
+            <input type="text" id="ai-user-query" class="ai-query-input" placeholder="e.g. Tractor diesel kharcha kaise kam kare? या अपना प्रश्न लिखें...">
+            <button type="button" class="btn btn-primary btn-query-ask" onclick="askKisanAiQuestion()">
+              <span>पूछें (Ask)</span> ➔
+            </button>
+          </div>
+
+          <div class="ai-quick-topics-heading">
+            <span>💡 Quick Farmer Questions (क्लिक करके पूछें):</span>
+          </div>
+
+          <div class="ai-faq-chips-grid">
+            <button type="button" class="ai-chip-btn" onclick="askKisanAiQuestion('Wheat buwai ke liye Rotavator better hai ya Cultivator?')">
+              🌾 Rotavator vs Cultivator?
+            </button>
+            <button type="button" class="ai-chip-btn" onclick="askKisanAiQuestion('Tractor diesel kharcha 25% kaise kam kare?')">
+              🚜 Tractor diesel saving tips?
+            </button>
+            <button type="button" class="ai-chip-btn" onclick="askKisanAiQuestion('Paddy combine harvester rent karne ke fayde?')">
+              🌾 Paddy harvester benefits?
+            </button>
+            <button type="button" class="ai-chip-btn" onclick="askKisanAiQuestion('Machine khareedne se acha rent karna kyu hai?')">
+              💰 Buy vs Rent financial logic?
+            </button>
+            <button type="button" class="ai-chip-btn" onclick="askKisanAiQuestion('Spraying me kitna time aur labor bachega?')">
+              💦 Sprayer time & labor savings?
+            </button>
+            <button type="button" class="ai-chip-btn" onclick="askKisanAiQuestion('Kharif se Rabi crop transition timing kaise plan kare?')">
+              📅 Kharif to Rabi machine timing?
+            </button>
+          </div>
+
+          <!-- Answer Display Box -->
+          <div id="ai-qa-answer-box" style="margin-top: 1.5rem;">
+            <div class="ai-empty-placeholder">
+              <span style="font-size: 2rem;">🌾</span>
+              <p>ऊपर दिए गए प्रश्नों पर क्लिक करें या अपना सवाल टाइप करें। किसान AI तुरंत वैज्ञानिक सलाह देगा।</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ====================================================================
@@ -1869,9 +2011,19 @@
     </div>
   </div>
 
+  <!-- Floating Kisan AI Assistant Pill -->
+  <div id="floating-kisan-ai" class="floating-ai-pill" onclick="navigateTo('ai')" title="Open Kisan AI Advisor (किसान AI सलाहकार)">
+    <span class="ai-sparkle-dot"></span>
+    <span class="ai-float-icon">🤖</span>
+    <span class="ai-float-label">Kisan AI</span>
+    <span class="ai-badge-chip">Smart</span>
+  </div>
+
   <!-- Scripts -->
+  <script src="translations.js"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <script src="kisan-ai.js"></script>
   <script src="demo-engine.js"></script>
 </body>
 </html>

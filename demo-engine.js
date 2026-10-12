@@ -601,9 +601,45 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 14/15: About AGRI-SHARE, Methodology & Viksit Bharat 2047
+    // STOP 14/16: Kisan AI — Smart Agritech Advisor & Voice Guide
     // -------------------------------------------------------------
-    setHudStatus("🔬 Stop 14/15: Navigating to About AGRI-SHARE — Methodology, Problem Statement & School Showcase...");
+    setHudStatus("🤖 Stop 14/16: Navigating to Kisan AI — Smart Agritech Sizing & Voice Guide...");
+    const navAi = document.getElementById("nav-ai");
+    if (navAi) {
+      await moveCursorTo(navAi, 500);
+      await triggerClickEffect(navAi);
+    }
+    if (typeof navigateTo === "function") navigateTo("ai");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    await sleep(450);
+    if (!isDemoRunning) return;
+
+    setHudStatus("⚡ Calculating AI Recommendation for Wheat (3 Acres) & Soil Matching...");
+    const aiCalcBtn = document.getElementById("btn-calc-ai-rec");
+    if (aiCalcBtn) {
+      await moveCursorTo(aiCalcBtn, 500);
+      await triggerClickEffect(aiCalcBtn);
+      if (typeof calculateKisanRecommendation === "function") calculateKisanRecommendation();
+    }
+    await sleep(900);
+    if (!isDemoRunning) return;
+
+    setHudStatus("💬 Testing AI Q&A: 'Rotavator vs Cultivator' Agritech Science Comparison...");
+    const aiFirstChip = document.querySelector(".ai-chip-btn");
+    if (aiFirstChip) {
+      await moveCursorTo(aiFirstChip, 500);
+      await triggerClickEffect(aiFirstChip);
+      if (typeof askKisanAiQuestion === "function") {
+        askKisanAiQuestion("Wheat buwai ke liye Rotavator better hai ya Cultivator?");
+      }
+    }
+    await sleep(1100);
+    if (!isDemoRunning) return;
+
+    // -------------------------------------------------------------
+    // STOP 15/16: About AGRI-SHARE, Methodology & Viksit Bharat 2047
+    // -------------------------------------------------------------
+    setHudStatus("🔬 Stop 15/16: Navigating to About AGRI-SHARE — Methodology, Problem Statement & School Showcase...");
     const navAbout = document.getElementById("nav-about");
     if (navAbout) {
       await moveCursorTo(navAbout, 500);
@@ -623,9 +659,9 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 15/15: Grand Finale — Return to Home with Celebration
+    // STOP 16/16: Grand Finale — Return to Home with Celebration
     // -------------------------------------------------------------
-    setHudStatus("🎉 Stop 15/15: A-to-Z Complete Tour Finished! Returning to Home — Ready for Judges & Visitors! 🌱");
+    setHudStatus("🎉 Stop 16/16: A-to-Z Complete Tour Finished! Returning to Home — Ready for Judges & Visitors! 🌱");
     if (typeof navigateTo === "function") navigateTo("home");
     window.scrollTo({ top: 0, behavior: "smooth" });
     await sleep(400);
