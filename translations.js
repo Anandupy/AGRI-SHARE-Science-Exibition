@@ -114,6 +114,38 @@
       // AI Page
       aiTitle: "🤖 Kisan AI — Smart Agritech Advisor",
       aiSubtitle: "Intelligent Machinery Sequencing, Acreage Estimation, Cost Optimization & Voice Advisory for Farmers.",
+      aiRecTitle: "🌱 Smart Crop & Machinery Sizing (AI Recommender)",
+      aiRecSub: "Select your crop, acreage, farming stage, and soil type to get scientific machine sizing and instant cost savings.",
+      lblAiCrop: "Crop Type",
+      cropOptions: {
+        wheat: "Wheat",
+        paddy: "Paddy / Rice",
+        cotton: "Cotton",
+        sugarcane: "Sugarcane",
+        soybean: "Soybean"
+      },
+      lblAiStage: "Farming Stage",
+      stageOptions: {
+        tillage: "Primary / Secondary Tillage",
+        sowing: "Precision Sowing & Planting",
+        spraying: "Crop Protection Spraying",
+        harvesting: "Harvesting & Residue Management"
+      },
+      lblAiAcres: "Farm Size in Acres",
+      lblAiSoil: "Soil Type",
+      soilOptions: {
+        black: "Black Heavy Soil",
+        loam: "Loamy Soil",
+        sandy: "Sandy Soil",
+        red: "Red Soil"
+      },
+      btnCalcAi: "Get Instant AI Recommendation",
+      aiQaTitle: "💬 Ask Kisan AI (Agritech Questions)",
+      aiQaSub: "Ask questions about machinery fuel efficiency, implement selection, or seasonal crop timing in your language.",
+      phAiQuery: "e.g. How to reduce tractor diesel consumption? Or ask your question...",
+      btnQueryAsk: "Ask (AI)",
+      aiQuickTopics: "Quick Farmer Questions (Click to ask):",
+      aiEmptyPh: "Click any question above or type your query. Kisan AI will provide instant scientific advice.",
 
       // About Page
       aboutTitle: "About AGRI-SHARE Project",
@@ -224,6 +256,38 @@
       // AI Page
       aiTitle: "🤖 किसान AI — स्मार्ट कृषि सलाहकार",
       aiSubtitle: "किसानों के लिए इंटेलिजेंट मशीनरी चयन, एकड़ अनुसार समय गणना, लागत बचत विश्लेषण और आवाज सहायता।",
+      aiRecTitle: "🌱 स्मार्ट फसल व मशीन कैलकुलेटर (AI Recommender)",
+      aiRecSub: "अपनी फसल, एकड़, खेती का चरण और मिट्टी का प्रकार चुनें और वैज्ञानिक मशीनरी चयन व लागत बचत प्राप्त करें।",
+      lblAiCrop: "फसल का प्रकार",
+      cropOptions: {
+        wheat: "गेहूं (Wheat)",
+        paddy: "धान / चावल (Paddy)",
+        cotton: "कपास (Cotton)",
+        sugarcane: "गन्ना (Sugarcane)",
+        soybean: "सोयाबीन (Soybean)"
+      },
+      lblAiStage: "खेती का चरण",
+      stageOptions: {
+        tillage: "जुताई व खेत तैयारी (Tillage)",
+        sowing: "सटीक बुवाई व रोपाई (Sowing)",
+        spraying: "फसल सुरक्षा छिड़काव (Spraying)",
+        harvesting: "कटाई व अवशेष प्रबंधन (Harvesting)"
+      },
+      lblAiAcres: "जमीन (एकड़ में)",
+      lblAiSoil: "मिट्टी का प्रकार",
+      soilOptions: {
+        black: "काली भारी मिट्टी (Black Soil)",
+        loam: "दोमट उपजाऊ मिट्टी (Loam Soil)",
+        sandy: "रेतीली हल्की मिट्टी (Sandy Soil)",
+        red: "लाल कंकरीली मिट्टी (Red Soil)"
+      },
+      btnCalcAi: "एआई सलाह प्राप्त करें",
+      aiQaTitle: "💬 पूछो किसान AI (कृषि प्रश्न)",
+      aiQaSub: "मशीनरी ईंधन दक्षता, सही उपकरण चयन या मौसमी फसल समय के बारे में अपनी भाषा में प्रश्न पूछें।",
+      phAiQuery: "उदा. ट्रैक्टर का डीजल खर्च कैसे कम करें? या अपना प्रश्न लिखें...",
+      btnQueryAsk: "पूछें",
+      aiQuickTopics: "किसानों के सामान्य प्रश्न (क्लिक करके पूछें):",
+      aiEmptyPh: "ऊपर दिए गए प्रश्नों पर क्लिक करें या अपना सवाल टाइप करें। किसान AI तुरंत वैज्ञानिक सलाह देगा।",
 
       // About Page
       aboutTitle: "एग्री-शेयर प्रोजेक्ट के बारे में",
@@ -334,6 +398,38 @@
       // AI Page
       aiTitle: "🤖 शेतकरी AI — स्मार्ट कृषी सल्लागार",
       aiSubtitle: "शेतकऱ्यांसाठी कृत्रिम बुद्धिमत्ता आधारित यंत्र निवड, एकरनुसार वेळ अंदाज, खर्च बचत आणि व्हॉइस सल्ला.",
+      aiRecTitle: "🌱 स्मार्ट पीक व यंत्र कॅल्क्युलेटर (AI Recommender)",
+      aiRecSub: "आपले पीक, एकर, शेतीचा टप्पा आणि मातीचा प्रकार निवडा आणि वैज्ञानिक यंत्र निवड व खर्च बचत मिळवा.",
+      lblAiCrop: "पिकाचा प्रकार",
+      cropOptions: {
+        wheat: "गहू (Wheat)",
+        paddy: "भात / धान (Paddy)",
+        cotton: "कापूस (Cotton)",
+        sugarcane: "ऊस (Sugarcane)",
+        soybean: "सोयाबीन (Soybean)"
+      },
+      lblAiStage: "शेतीचा टप्पा",
+      stageOptions: {
+        tillage: "नांगरणी व पूर्वतयारी (Tillage)",
+        sowing: "अचूक पेरणी व लागवड (Sowing)",
+        spraying: "पीक संरक्षण फवारणी (Spraying)",
+        harvesting: "कापणी व अवशेष व्यवस्थापन (Harvesting)"
+      },
+      lblAiAcres: "जमीन (एकरमध्ये)",
+      lblAiSoil: "मातीचा प्रकार",
+      soilOptions: {
+        black: "काळी भारी माती (Black Soil)",
+        loam: "गाळाची सुपीक माती (Loam Soil)",
+        sandy: "वाळूमिश्रित हलकी माती (Sandy Soil)",
+        red: "लाल माती (Red Soil)"
+      },
+      btnCalcAi: "AI सल्ला मिळवा",
+      aiQaTitle: "💬 विचारा शेतकरी AI (कृषी प्रश्न)",
+      aiQaSub: "यंत्रसामग्री इंधन कार्यक्षमता, योग्य अवजारे निवड किंवा हंगामी वेळेबद्दल आपल्या भाषेत प्रश्न विचारा.",
+      phAiQuery: "उदा. ट्रॅक्टर डिझेल खर्च कसा कमी करावा? किंवा प्रश्न टाइप करा...",
+      btnQueryAsk: "विचारा",
+      aiQuickTopics: "शेतकऱ्यांचे नेहमीचे प्रश्न (क्लिक करून विचारा):",
+      aiEmptyPh: "वरील कोणत्याही प्रश्नावर क्लिक करा किंवा आपला प्रश्न टाइप करा. शेतकरी AI त्वरित वैज्ञानिक सल्ला देईल.",
 
       // About Page
       aboutTitle: "एग्री-शेअर प्रकल्पाविषयी",
@@ -538,9 +634,51 @@
     const floatAiText = document.querySelector("#floating-kisan-ai .ai-float-label");
     if (floatAiText) floatAiText.innerText = dict.navAi || "🤖 Kisan AI";
 
-    // 10. AI Page Titles if rendered
+    // 10. AI Page Complete Translation
     updateSelectorText("#page-ai .page-title", dict.aiTitle);
     updateSelectorText("#page-ai .page-subtitle", dict.aiSubtitle);
+    updateElementText("ai-recommender-title", dict.aiRecTitle || "🌱 Smart Crop & Machinery Sizing (AI Recommender)");
+    updateElementText("ai-recommender-subtext", dict.aiRecSub || "Select your crop, acreage, farming stage, and soil type to get scientific machine sizing and instant cost savings.");
+    updateElementText("lbl-ai-crop", `${dict.lblAiCrop || 'Crop Type'} <span class="required">*</span>`);
+    updateElementText("lbl-ai-stage", `${dict.lblAiStage || 'Farming Stage'} <span class="required">*</span>`);
+    updateElementText("lbl-ai-acres", `${dict.lblAiAcres || 'Farm Size in Acres'} <span class="required">*</span>`);
+    updateElementText("lbl-ai-soil", `${dict.lblAiSoil || 'Soil Type'} <span class="required">*</span>`);
+    updateElementText("btn-calc-ai-rec-text", dict.btnCalcAi || "Get Instant AI Recommendation");
+
+    // Select options on AI page
+    const cropSelect = document.getElementById("ai-crop-select");
+    if (cropSelect && dict.cropOptions) {
+      Object.keys(dict.cropOptions).forEach(k => {
+        const opt = cropSelect.querySelector(`option[value="${k}"]`);
+        if (opt) opt.innerText = dict.cropOptions[k];
+      });
+    }
+
+    const stageSelect = document.getElementById("ai-stage-select");
+    if (stageSelect && dict.stageOptions) {
+      Object.keys(dict.stageOptions).forEach(k => {
+        const opt = stageSelect.querySelector(`option[value="${k}"]`);
+        if (opt) opt.innerText = dict.stageOptions[k];
+      });
+    }
+
+    const soilSelect = document.getElementById("ai-soil-select");
+    if (soilSelect && dict.soilOptions) {
+      Object.keys(dict.soilOptions).forEach(k => {
+        const opt = soilSelect.querySelector(`option[value="${k}"]`);
+        if (opt) opt.innerText = dict.soilOptions[k];
+      });
+    }
+
+    // AI Q&A Card
+    updateElementText("ai-qa-title", dict.aiQaTitle || "💬 Ask Kisan AI (Agritech Questions)");
+    updateElementText("ai-qa-subtext", dict.aiQaSub || "Ask questions about machinery fuel efficiency, implement selection, or seasonal crop timing in your language.");
+    const queryInput = document.getElementById("ai-user-query");
+    if (queryInput) queryInput.placeholder = dict.phAiQuery || "e.g. How to reduce tractor diesel consumption? Or ask your question...";
+    updateElementText("btn-query-ask-text", dict.btnQueryAsk || "Ask (AI)");
+    updateElementText("ai-quick-topics-label", `<span>💡 ${dict.aiQuickTopics || 'Quick Farmer Questions (Click to ask):'}</span>`);
+    const emptyPh = document.getElementById("ai-empty-placeholder");
+    if (emptyPh) emptyPh.innerHTML = `<span style="font-size: 2rem;">🌾</span><p>${dict.aiEmptyPh || 'Click any question above or type your query. Kisan AI will provide instant scientific advice.'}</p>`;
 
     // Notify listeners
     document.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang: langCode, dict: dict } }));

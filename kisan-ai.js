@@ -285,6 +285,49 @@
     const netSavings = purchaseCost - totalRentalCost;
     const savingsPercent = Math.round(((purchaseCost - totalRentalCost) / purchaseCost) * 100);
 
+    // Multi-Language Strings
+    const lang = (window.getCurrentLanguage && window.getCurrentLanguage()) || localStorage.getItem("agrishare_lang") || "en";
+    const isHindi = lang === "hi";
+    const isMarathi = lang === "mr";
+
+    let labelBadge = "🤖 AI Verified Agritech Recommendation";
+    let labelAudioBtn = "🔊 Listen to Audio Guide";
+    let labelRecMach = "🚜 Recommended Machine";
+    let labelHours = "⏱️ Estimated Total Hours";
+    let labelRentCost = "💵 AGRI-SHARE Rental Cost";
+    let labelBuyCost = "💰 Capital Required to Buy Machine";
+    let labelSpec = "Agritech Engineering Specification:";
+    let labelDiesel = "Fuel & Diesel Optimization Tip:";
+    let labelSoil = "Soil Type & Draft Context:";
+    let labelSavings = `🎉 Net Capital Savings: ₹${netSavings.toLocaleString("en-IN")} (${savingsPercent}% saved vs purchasing!)`;
+    let labelBookBtn = `👉 Book ${stageData.type} on AGRI-SHARE (${calculatedHours} hrs)`;
+
+    if (isHindi) {
+      labelBadge = "🤖 एआई सत्यापित कृषि इंजीनियरिंग सिफारिश";
+      labelAudioBtn = "🔊 बोलकर सुनो (Audio)";
+      labelRecMach = "🚜 अनुशंसित मशीन (Recommended)";
+      labelHours = "⏱️ आवश्यक कुल घंटे (Estimated Hours)";
+      labelRentCost = "💵 AGRI-SHARE किराया लागत";
+      labelBuyCost = "💰 नई मशीन खरीदने पर फंसाने वाली पूंजी";
+      labelSpec = "कृषि विज्ञान विश्लेषण (Agritech Specification):";
+      labelDiesel = "डीजल व ईंधन बचत गाइड (Fuel Optimization Tip):";
+      labelSoil = "मिट्टी का प्रकार व ड्रॉफ्ट लोड:";
+      labelSavings = `🎉 ₹${netSavings.toLocaleString("en-IN")} की सीधी बचत! (मशीन खरीदने की तुलना में ${savingsPercent}% पूंजी बचत)`;
+      labelBookBtn = `👉 एग्री-शेयर पर ${stageData.type} बुक करें (${calculatedHours} घंटे)`;
+    } else if (isMarathi) {
+      labelBadge = "🤖 AI प्रमाणित कृषी यांत्रिकीकरण शिफारस";
+      labelAudioBtn = "🔊 आवाजात ऐका (Audio)";
+      labelRecMach = "🚜 शिफारस केलेले यंत्र";
+      labelHours = "⏱️ अंदाजे एकूण तास";
+      labelRentCost = "💵 AGRI-SHARE भाडे खर्च";
+      labelBuyCost = "💰 नवीन यंत्र खरेदीचे अडकणारे भांडवल";
+      labelSpec = "कृषी अभियांत्रिकी तपशील:";
+      labelDiesel = "डिझेल व इंधन बचत सल्ला:";
+      labelSoil = "मातीचा प्रकार व ड्रॉफ्ट भार:";
+      labelSavings = `🎉 ₹${netSavings.toLocaleString("en-IN")} निव्वळ बचत! (यंत्र खरेदीच्या तुलनेत ${savingsPercent}% भांडवली बचत)`;
+      labelBookBtn = `👉 AGRI-SHARE वर ${stageData.type} बुक करा (${calculatedHours} तास)`;
+    }
+
     // Update UI elements
     const resBox = document.getElementById("ai-results-panel");
     if (!resBox) return;
@@ -292,28 +335,28 @@
     resBox.innerHTML = `
       <div class="ai-result-card animate-fadeIn">
         <div class="ai-res-header">
-          <div class="ai-badge-chip">🤖 AI Verified Agritech Recommendation</div>
-          <button type="button" class="ai-speech-btn" onclick="speakAiRecommendation()" title="Listen to recommendation in audio (बोलकर सुनो)">
-            <span class="speech-icon">🔊</span> <span>बोलकर सुनो (Audio)</span>
+          <div class="ai-badge-chip">${labelBadge}</div>
+          <button type="button" class="ai-speech-btn" onclick="speakAiRecommendation()" title="${labelAudioBtn}">
+            <span class="speech-icon">🔊</span> <span>${labelAudioBtn}</span>
           </button>
         </div>
 
         <div class="ai-res-body">
           <div class="ai-res-grid">
             <div class="ai-metric-pill">
-              <span class="metric-label">🚜 अनुशंसित मशीन (Recommended)</span>
+              <span class="metric-label">${labelRecMach}</span>
               <strong class="metric-val text-primary">${stageData.machine}</strong>
             </div>
             <div class="ai-metric-pill">
-              <span class="metric-label">⏱️ आवश्यक कुल घंटे (Estimated Hours)</span>
+              <span class="metric-label">${labelHours}</span>
               <strong class="metric-val">${calculatedHours} Hours (${acres} Acres)</strong>
             </div>
             <div class="ai-metric-pill">
-              <span class="metric-label">💵 AGRI-SHARE किराया लागत (Rental Cost)</span>
+              <span class="metric-label">${labelRentCost}</span>
               <strong class="metric-val text-success">₹${totalRentalCost.toLocaleString("en-IN")} (@ ₹${stageData.ratePerHour}/hr)</strong>
             </div>
             <div class="ai-metric-pill highlight-gold">
-              <span class="metric-label">💰 नई मशीन खरीदने पर फंसाने वाली पूंजी</span>
+              <span class="metric-label">${labelBuyCost}</span>
               <strong class="metric-val text-danger">₹${purchaseCost.toLocaleString("en-IN")}</strong>
             </div>
           </div>
@@ -322,32 +365,32 @@
             <div class="insight-row">
               <span class="insight-icon">💡</span>
               <div>
-                <strong>कृषि विज्ञान विश्लेषण (Agritech Specification):</strong>
+                <strong>${labelSpec}</strong>
                 <p>${stageData.specs}</p>
               </div>
             </div>
             <div class="insight-row">
               <span class="insight-icon">⛽</span>
               <div>
-                <strong>डीजल व ईंधन बचत गाइड (Fuel Optimization Tip):</strong>
+                <strong>${labelDiesel}</strong>
                 <p>${stageData.dieselTip}</p>
               </div>
             </div>
             <div class="insight-row">
               <span class="insight-icon">🌱</span>
               <div>
-                <strong>मिट्टी का प्रकार व ड्रॉफ्ट (Soil Context):</strong>
-                <p>${soilData.name} (लोड फैक्टर: ${soilData.factor}x)</p>
+                <strong>${labelSoil}</strong>
+                <p>${soilData.name} (Load factor: ${soilData.factor}x)</p>
               </div>
             </div>
           </div>
 
           <div class="ai-action-bar">
             <div class="ai-savings-summary">
-              🎉 <strong>₹${netSavings.toLocaleString("en-IN")} की सीधी बचत!</strong> (मशीन खरीदने की तुलना में ${savingsPercent}% पूंजी बचत)
+              ${labelSavings}
             </div>
             <button type="button" class="btn btn-primary btn-book-ai" onclick="bookFromAi('${stageData.type}', ${calculatedHours})">
-              <span>👉</span> <span>Book ${stageData.type} on AGRI-SHARE (${calculatedHours} hrs)</span>
+              <span>👉</span> <span>${labelBookBtn}</span>
             </button>
           </div>
         </div>
@@ -355,7 +398,13 @@
     `;
 
     // Cache the spoken text for audio
-    window.currentAiSpeechText = `किसान भाई, ${acres} एकड़ ${cropData.nameEn} के लिए, एआई सलाहकार की सिफारिश है: ${stageData.machine}. आपके खेत में काम पूरा करने के लिए लगभग ${calculatedHours} घंटे लगेंगे. इसका कुल किराया सिर्फ ₹${totalRentalCost} होगा. नई मशीन खरीदने के ₹${purchaseCost} के भारी खर्च से बचकर आप ₹${netSavings} की सीधी बचत कर रहे हैं.`;
+    if (isHindi) {
+      window.currentAiSpeechText = `किसान भाई, ${acres} एकड़ ${cropData.nameEn} के लिए, एआई सलाहकार की सिफारिश है: ${stageData.machine}. आपके खेत में काम पूरा करने के लिए लगभग ${calculatedHours} घंटे लगेंगे. इसका कुल किराया सिर्फ ₹${totalRentalCost} होगा. नई मशीन खरीदने के ₹${purchaseCost} के भारी खर्च से बचकर आप ₹${netSavings} की सीधी बचत कर रहे हैं.`;
+    } else if (isMarathi) {
+      window.currentAiSpeechText = `शेतकरी बंधूंनो, ${acres} एकर शेतीसाठी एआय सल्लागाराची शिफारस आहे: ${stageData.machine}. अंदाजे ${calculatedHours} तास लागतील आणि एकूण भाडे फक्त ₹${totalRentalCost} असेल. नवीन मशिन खरेदी न करता तुम्ही ₹${netSavings} वाचवत आहात.`;
+    } else {
+      window.currentAiSpeechText = `Hello Farmer, for ${acres} acres, our AI recommendation is: ${stageData.machine}. It will take approximately ${calculatedHours} operating hours costing just ₹${totalRentalCost}. By choosing AGRI-SHARE, you save ₹${netSavings} without taking costly machine loans.`;
+    }
   }
 
   // Voice speech synthesis
@@ -466,7 +515,8 @@
     });
 
     // Run initial recommendation
-    setTimeout(calculateKisanRecommendation, 400);
+  document.addEventListener("languageChanged", function () {
+    calculateKisanRecommendation();
   });
 
   window.calculateKisanRecommendation = calculateKisanRecommendation;
