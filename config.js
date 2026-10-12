@@ -20,8 +20,8 @@ const AGRI_CONFIG = {
   GOOGLE_FIND_SHEET_GID: "1857933895",
   GOOGLE_FIND_SHEET_URL: "https://docs.google.com/spreadsheets/d/1tOOZV862t1TowPh3Pj6gs3cueyesO62yaAGpfo5m-GY/edit?resourcekey=&gid=1857933895#gid=1857933895",
 
-  // 5. Google Apps Script Web App Deployment URL for live search & sync
-  GOOGLE_APPS_SCRIPT_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbzzEqB8cxm5FyTNCM42nM5C8DydD90hXiQz3kV9ufHQvN05X_l2FHIj8t3OIyktBzfnrQ/exec",
+  // 5. Google Apps Script Web App Deployment URL for live search & sync (Connected Live Deployment)
+  GOOGLE_APPS_SCRIPT_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbxy7AGOeQ5vI6xNAAigkMFc1c5uTuFGljh5KVQXg2aAUENCu5ifm2j6AFu_Qy9xhZrq/exec",
 
   // 6. Google Apps Script Project Editor URL & Project ID
   GOOGLE_APPS_SCRIPT_PROJECT_URL: "https://script.google.com/home/projects/1H8sEAAJRB4nngGcFCZF01YfK64ExmsKvB-sMcL6qKKI_p9iOqM_4TRTm/edit",
@@ -31,7 +31,7 @@ const AGRI_CONFIG = {
   IS_DEMO_MODE: false,
 
   // Exhibition Metadata
-  VERSION: "2.4.0",
+  VERSION: "2.5.0",
   EXHIBITION_NAME: "School Science Exhibition — Agricultural Innovation Showcase",
   CONTACT_COORDINATOR: "anandupy000@gmail.com"
 };
@@ -39,15 +39,25 @@ const AGRI_CONFIG = {
 // Retrieve any saved overrides from browser localStorage
 (function loadSavedConfig() {
   try {
+    const liveDefaultUrl = "https://script.google.com/macros/s/AKfycbxy7AGOeQ5vI6xNAAigkMFc1c5uTuFGljh5KVQXg2aAUENCu5ifm2j6AFu_Qy9xhZrq/exec";
     const saved = localStorage.getItem('AGRI_CONFIG_OVERRIDES');
     if (saved) {
       const parsed = JSON.parse(saved);
       // Auto-correct legacy lowercase z in Sheet ID
       if (parsed.GOOGLE_SHEET_ID && parsed.GOOGLE_SHEET_ID.includes('1YWFbYnNSzic')) {
         parsed.GOOGLE_SHEET_ID = parsed.GOOGLE_SHEET_ID.replace('1YWFbYnNSzic', '1YWFbYnNSZic');
-        localStorage.setItem('AGRI_CONFIG_OVERRIDES', JSON.stringify(parsed));
       }
+      // Auto-migrate any older or sample Apps Script URLs to the live connected URL
+      if (!parsed.GOOGLE_APPS_SCRIPT_WEB_APP_URL || parsed.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes('AKfycbzzEqB8') || parsed.GOOGLE_APPS_SCRIPT_WEB_APP_URL.includes('SAMPLE')) {
+        parsed.GOOGLE_APPS_SCRIPT_WEB_APP_URL = liveDefaultUrl;
+      }
+      // Ensure IS_DEMO_MODE defaults to false (Live mode)
+      parsed.IS_DEMO_MODE = false;
+      localStorage.setItem('AGRI_CONFIG_OVERRIDES', JSON.stringify(parsed));
       Object.assign(AGRI_CONFIG, parsed);
+    } else {
+      AGRI_CONFIG.GOOGLE_APPS_SCRIPT_WEB_APP_URL = liveDefaultUrl;
+      AGRI_CONFIG.IS_DEMO_MODE = false;
     }
   } catch (err) {
     console.warn("Could not load stored config overrides:", err);

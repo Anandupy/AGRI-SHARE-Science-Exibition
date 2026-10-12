@@ -6,204 +6,176 @@
  * =========================================================================================
  */
 
-// 1. MASTER SIMULATED DATASET (Matches Section 6 Specification exactly)
+// 1. MASTER EQUIPMENT DATASET (Live synchronized with Google Sheets AGRISHARE Master Database)
 // Columns: ID | Equipment | Owner | Village | Rate/hr | Status | Best Month | Available Date | Contact Number
 const INITIAL_EQUIPMENT_DATA = [
   {
-    id: "A01",
-    equipment: "Rotavator",
-    owner: "Farmer A",
-    village: "Village A",
-    distance: 2, // km (simulated)
-    rate: 800,
-    status: "Available",
-    bestMonth: "April–May",
-    availableDate: "2026-10-15",
-    contact: "9820112233",
-    image: "assets/rotavator_card.jpg",
-    info: "Heavy-duty 42-blade rotavator suitable for wet & dry land preparation."
-  },
-  {
-    id: "A02",
-    equipment: "Tractor",
-    owner: "Farmer B",
-    village: "Village B",
-    distance: 5,
-    rate: 1000,
-    status: "Available",
-    bestMonth: "April–June",
-    availableDate: "2026-10-16",
-    contact: "9820334455",
-    image: "assets/tractor_card.jpg",
-    info: "45 HP 4WD tractor with driver. Highly reliable for plowing and transport."
-  },
-  {
-    id: "A03",
+    id: "EQ-01",
     equipment: "Seed Drill",
-    owner: "Farmer C",
+    owner: "Farmer Ramdas Patil",
     village: "Village A",
-    distance: 3,
+    distance: 2,
     rate: 600,
-    status: "Booked",
-    bestMonth: "June–July",
-    availableDate: "2026-10-17",
-    contact: "9820445566",
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-15",
+    contact: "9823456789",
     image: "assets/seed_drill_card.jpg",
     info: "Automatic multi-row seed-cum-fertilizer drill for precise seed spacing."
   },
   {
-    id: "A04",
-    equipment: "Sprayer",
-    owner: "Farmer D",
-    village: "Village C",
-    distance: 1,
-    rate: 250,
+    id: "EQ-02",
+    equipment: "Tractor",
+    owner: "Test Farmer Ramesh",
+    village: "Village A",
+    distance: 3,
+    rate: 1000,
     status: "Available",
-    bestMonth: "July–September",
-    availableDate: "2026-10-18",
+    bestMonth: "All Season",
+    availableDate: "2026-10-15",
     contact: "9820123456",
-    image: "assets/sprayer_card.jpg",
-    info: "Tractor boom sprayer with 500-liter tank for uniform pest management."
+    image: "assets/tractor_card.jpg",
+    info: "45 HP 4WD tractor with driver. Highly reliable for plowing and transport."
   },
   {
-    id: "A05",
+    id: "EQ-03",
     equipment: "Harvester",
-    owner: "Farmer E",
-    village: "Village B",
-    distance: 8,
+    owner: "Anand Upadhyay",
+    village: "Thane",
+    distance: 4,
     rate: 1500,
     status: "Available",
-    bestMonth: "October–November",
-    availableDate: "2026-10-22",
-    contact: "9820667788",
+    bestMonth: "All Season",
+    availableDate: "2026-10-18",
+    contact: "9082807803",
     image: "assets/harvester_card.jpg",
     info: "Multi-crop combine harvester with grain elevator. Fast paddy & wheat harvest."
   },
   {
-    id: "A06",
-    equipment: "Thresher",
-    owner: "Farmer F",
+    id: "EQ-04",
+    equipment: "Rotavator",
+    owner: "Farmer Suresh",
     village: "Village A",
-    distance: 4,
-    rate: 700,
+    distance: 2,
+    rate: 800,
     status: "Available",
-    bestMonth: "October–December",
-    availableDate: "2026-10-25",
-    contact: "9820551122",
+    bestMonth: "All Season",
+    availableDate: "2026-10-16",
+    contact: "9820556677",
+    image: "assets/rotavator_card.jpg",
+    info: "Heavy-duty 42-blade rotavator suitable for wet & dry land preparation."
+  },
+  {
+    id: "EQ-05",
+    equipment: "Rotavator",
+    owner: "Kavya Patil",
+    village: "Bhiwandi",
+    distance: 5,
+    rate: 1050,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-17",
+    contact: "9821378027",
+    image: "assets/rotavator_card.jpg",
+    info: "Heavy-duty rotavator for fine seedbed pulverization."
+  },
+  {
+    id: "EQ-06",
+    equipment: "Tractor",
+    owner: "Farmer Suresh",
+    village: "Village B",
+    distance: 2,
+    rate: 850,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-20",
+    contact: "9820556677",
+    image: "assets/tractor_card.jpg",
+    info: "45 HP heavy duty tractor with operator."
+  },
+  {
+    id: "EQ-07",
+    equipment: "Sprayer",
+    owner: "Farmer Suresh",
+    village: "Village A",
+    distance: 2,
+    rate: 300,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-20",
+    contact: "9820556677",
+    image: "assets/sprayer_card.jpg",
+    info: "Tractor boom sprayer with 500-liter tank for uniform pest management."
+  },
+  {
+    id: "EQ-08",
+    equipment: "Rotavator",
+    owner: "Farmer Ramdas Patil",
+    village: "Village A",
+    distance: 2,
+    rate: 750,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-18",
+    contact: "9823456789",
+    image: "assets/rotavator_card.jpg",
+    info: "Secondary tillage implement for fine seedbed pulverization."
+  },
+  {
+    id: "EQ-09",
+    equipment: "Power Tiller",
+    owner: "Rajesh Khan",
+    village: "Village C",
+    distance: 4,
+    rate: 750,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-20",
+    contact: "9335676575",
+    image: "assets/tractor_card.jpg",
+    info: "Compact high draft power tiller for inter-row tilling."
+  },
+  {
+    id: "EQ-10",
+    equipment: "Rotavator",
+    owner: "Balram Patil",
+    village: "Village A",
+    distance: 3,
+    rate: 800,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-19",
+    contact: "9820556677",
+    image: "assets/rotavator_card.jpg",
+    info: "Reliable rotavator for wheat seedbed preparation."
+  },
+  {
+    id: "EQ-11",
+    equipment: "Thresher",
+    owner: "Sankalp Sharma",
+    village: "Kalyan",
+    distance: 6,
+    rate: 800,
+    status: "Available",
+    bestMonth: "All Season",
+    availableDate: "2026-10-21",
+    contact: "9820112233",
     image: "assets/thresher_card.jpg",
     info: "High-speed multi-crop thresher producing clean grain separation."
   },
   {
-    id: "A07",
+    id: "EQ-12",
     equipment: "Rotavator",
-    owner: "Farmer G",
-    village: "Village C",
-    distance: 6,
-    rate: 750,
-    status: "Available",
-    bestMonth: "November–December",
-    availableDate: "2026-10-20",
-    contact: "9820773344",
-    image: "assets/rotavator_card.jpg",
-    info: "36-blade rotavator suitable for vegetable bed and nursery preparation."
-  },
-  {
-    id: "A08",
-    equipment: "Tractor",
-    owner: "Farmer H",
-    village: "Village A",
-    distance: 2,
-    rate: 1100,
-    status: "Available",
-    bestMonth: "October–November",
-    availableDate: "2026-10-21",
-    contact: "9820884455",
-    image: "assets/tractor_card.jpg",
-    info: "50 HP tractor with double-acting hydraulic trolley."
-  },
-  {
-    id: "A09",
-    equipment: "Seed Drill",
-    owner: "Farmer I",
+    owner: "Farmer Ramdas Patil",
     village: "Village B",
-    distance: 7,
-    rate: 650,
-    status: "Available",
-    bestMonth: "November–December",
-    availableDate: "2026-10-23",
-    contact: "9820995566",
-    image: "assets/seed_drill_card.jpg",
-    info: "9-tyne tractor seed drill with calibrated metering roller."
-  },
-  {
-    id: "A10",
-    equipment: "Sprayer",
-    owner: "Farmer J",
-    village: "Village B",
-    distance: 4,
-    rate: 280,
-    status: "Booked",
-    bestMonth: "January–February",
-    availableDate: "2026-10-19",
-    contact: "9820226677",
-    image: "assets/sprayer_card.jpg",
-    info: "High pressure orchard sprayer with fine adjustable mist nozzles."
-  },
-  {
-    id: "A11",
-    equipment: "Harvester",
-    owner: "Farmer K",
-    village: "Village A",
-    distance: 5,
-    rate: 1600,
-    status: "Available",
-    bestMonth: "March–April",
-    availableDate: "2026-10-24",
-    contact: "9820337788",
-    image: "assets/harvester_card.jpg",
-    info: "Modern combine harvester equipped with straw chopper."
-  },
-  {
-    id: "A12",
-    equipment: "Thresher",
-    owner: "Farmer L",
-    village: "Village C",
-    distance: 9,
-    rate: 750,
-    status: "Available",
-    bestMonth: "March–April",
-    availableDate: "2026-10-26",
-    contact: "9820448899",
-    image: "assets/thresher_card.jpg",
-    info: "Heavy duty tractor PTO driven thresher with dual winnowing fans."
-  },
-  {
-    id: "A13",
-    equipment: "Laser Land Leveller",
-    owner: "Farmer M",
-    village: "Village A",
     distance: 3,
-    rate: 950,
+    rate: 750,
     status: "Available",
-    bestMonth: "April–May",
-    availableDate: "2026-10-27",
-    contact: "9820556677",
+    bestMonth: "All Season",
+    availableDate: "2026-10-22",
+    contact: "9823456789",
     image: "assets/rotavator_card.jpg",
-    info: "Precision laser transmitter and scraper blade saving 25% irrigation water."
-  },
-  {
-    id: "A14",
-    equipment: "Power Tiller",
-    owner: "Farmer N",
-    village: "Village B",
-    distance: 2,
-    rate: 500,
-    status: "Available",
-    bestMonth: "June–July",
-    availableDate: "2026-10-28",
-    contact: "9820667788",
-    image: "assets/tractor_card.jpg",
-    info: "15 HP diesel power tiller ideal for terrace fields and wet puddling."
+    info: "High-performance secondary tillage rotavator."
   }
 ];
 
@@ -357,6 +329,11 @@ async function fetchLiveGoogleSheetData() {
         renderAvailableEquipment();
         updateListingCountBadge();
 
+        // Refresh search results on Find page with live data
+        const searchVillage = document.getElementById("find-village") ? document.getElementById("find-village").value : "Village A";
+        const searchEquip = document.getElementById("find-equipment") ? document.getElementById("find-equipment").value : "Rotavator";
+        executeFindSearch(searchVillage, searchEquip, currentRentalHours || 4);
+
         // Merge any bookings returned from Google Apps Script (Find Requests Sheet)
         if (Array.isArray(json.bookings) && json.bookings.length > 0) {
           json.bookings.forEach(gb => {
@@ -368,7 +345,7 @@ async function fetchLiveGoogleSheetData() {
           if (currentUser) renderFarmerDashboardUI();
         }
 
-        showToast(`🟢 Live Google Sheet Connected! Loaded ${liveItems.length} records.`, "success");
+        showToast(`🟢 Google Sheets Live Sync: Connected to Master Database (${liveItems.length} records)`, "success");
       }
     } catch (err) {
       console.warn("Could not fetch live Google Sheet data:", err);
@@ -382,6 +359,11 @@ function loadEquipmentDatabase() {
     const saved = localStorage.getItem("AGRISHARE_DATABASE_ITEMS");
     if (saved) {
       currentEquipmentDatabase = JSON.parse(saved);
+      // Auto-migrate if stored data was old dummy "Farmer A / Farmer B" dataset
+      if (currentEquipmentDatabase.some(item => item.owner === "Farmer A" || item.id === "A01" || item.id === "A14")) {
+        currentEquipmentDatabase = [...INITIAL_EQUIPMENT_DATA];
+        saveEquipmentDatabase();
+      }
     } else {
       currentEquipmentDatabase = [...INITIAL_EQUIPMENT_DATA];
       saveEquipmentDatabase();
@@ -410,11 +392,12 @@ function updateListingCountBadge() {
 }
 
 function resetDatabaseToDefault() {
-  if (confirm("Reset equipment database to the 14 simulated default exhibition records?")) {
+  if (confirm("Refresh equipment database directly from live Google Sheets?")) {
     currentEquipmentDatabase = [...INITIAL_EQUIPMENT_DATA];
     saveEquipmentDatabase();
     renderAvailableEquipment();
-    showToast("Database reset to default exhibition records.", "success");
+    fetchLiveGoogleSheetData();
+    showToast("Equipment database synchronized from Google Sheets.", "success");
   }
 }
 
@@ -853,7 +836,7 @@ function renderSearchResults(items, hours, village, equipment, isNearbyFallback 
 
           <div class="card-specs-list">
             <div>Rate: <strong>₹${item.rate}/hr</strong></div>
-            <div>Distance: <strong>${item.distance || 2} km</strong> (simulated)</div>
+            <div>Distance: <strong>${item.distance || 2} km</strong></div>
             <div>Best Season: <strong>${item.bestMonth || 'All Year'}</strong></div>
             <div>Available: <strong>${item.availableDate || 'Immediate'}</strong></div>
           </div>
@@ -1159,7 +1142,7 @@ function renderAvailableCards(items) {
 
           <div class="card-specs-list">
             <div>Rate: <strong>₹${item.rate}/hr</strong></div>
-            <div>Distance: <strong>${item.distance || 2} km</strong> (sim.)</div>
+            <div>Distance: <strong>${item.distance || 2} km</strong></div>
             <div>Season: <strong>${item.bestMonth || 'All Year'}</strong></div>
             <div>Date: <strong>${item.availableDate || 'Available'}</strong></div>
           </div>

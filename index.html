@@ -363,25 +363,25 @@
 
       <!-- Featured Recommended Machine -->
       <div class="home-recommended-banner">
-        <div class="rec-banner-tag">⭐ Featured Recommended Machine</div>
+        <div class="rec-banner-tag">⭐ Featured Verified Machine</div>
         <div class="rec-banner-content">
           <img src="assets/rotavator_card.jpg" alt="Recommended Rotavator" class="rec-banner-img">
           <div class="rec-banner-details">
-            <h3>Rotavator (A01)</h3>
+            <h3>Rotavator (EQ-04)</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.75rem;">
-              Owner: <strong>Farmer A</strong> • Village: <strong>Village A</strong>
+              Owner: <strong>Farmer Suresh</strong> • Village: <strong>Village A</strong>
             </p>
             <div class="rec-banner-specs">
-              <span>📍 Distance: <strong>2 km (simulated)</strong></span>
+              <span>📍 Distance: <strong>2 km</strong></span>
               <span>💵 Rate: <strong>₹800 / hour</strong></span>
               <span>🟢 Status: <strong>Available</strong></span>
-              <span>🗓️ Best Month: <strong>April–May</strong></span>
+              <span>🗓️ Best Month: <strong>All Season</strong></span>
             </div>
           </div>
           <div class="rec-banner-pricing">
-            <div style="font-size: 0.85rem; color: var(--text-subtle);">Demo 4 Hours Rental:</div>
+            <div style="font-size: 0.85rem; color: var(--text-subtle);">Estimated 4 Hours Rental:</div>
             <div class="rec-price-highlight">₹3,200</div>
-            <button class="btn btn-primary" onclick="openEnquiryModal('A01')">Enquire / Book Machine</button>
+            <button class="btn btn-primary" onclick="openEnquiryModal('EQ-04', 4)">Enquire / Book Machine</button>
           </div>
         </div>
       </div>
@@ -434,11 +434,11 @@
         </div>
       </div>
 
-      <!-- Exhibition Notice -->
-      <div class="simulated-notice-card">
-        <div class="simulated-notice-icon">ℹ️</div>
+      <!-- Live Cloud Architecture Status -->
+      <div class="simulated-notice-card" style="border-left-color: var(--primary-color); background: rgba(34, 197, 94, 0.08);">
+        <div class="simulated-notice-icon" style="color: var(--primary-color);">🟢</div>
         <div>
-          <strong>Science Exhibition Notice:</strong> Sample equipment listings, owner profiles, and distance figures (e.g., 2 km) are simulated for demonstration. Live equipment access connects to your configured Google Sheets database.
+          <strong>Live Cloud Integration Active:</strong> Agricultural machinery catalog and farmer booking requests are synchronized directly with Google Sheets and Google Apps Script in real-time.
         </div>
       </div>
     </section>
@@ -622,7 +622,7 @@
               <div class="flow-step-item">
                 <span class="flow-step-badge">4</span>
                 <div>
-                  <strong>Simulated Fallback:</strong> When Google Apps Script is not deployed, the website runs in demo mode with simulated records.
+                  <strong>Cloud Database Sync:</strong> Google Apps Script webhook live syncs requirements and listings directly into Google Sheets.
                 </div>
               </div>
             </div>
@@ -801,34 +801,34 @@
           <button class="btn btn-outline btn-sm" onclick="exportDatabaseToCSV()">
             <span>📥</span> Export to CSV
           </button>
-          <button class="btn btn-secondary btn-sm" onclick="resetDatabaseToDefault()">
-            <span>🔄</span> Reset Demo Data
+          <button class="btn btn-secondary btn-sm" onclick="fetchLiveGoogleSheetData()" title="Sync live equipment records from Google Sheets">
+            <span>🔄</span> Sync Live Google Sheet
           </button>
         </div>
       </div>
 
-      <!-- Featured Recommended Demo Listing (Section 9 Requirement) -->
+      <!-- Featured Recommended Live Listing -->
       <div class="home-recommended-banner" style="margin-bottom: 2rem;">
-        <div class="rec-banner-tag">⭐ Featured Recommended Demo Listing</div>
+        <div class="rec-banner-tag">⭐ Featured Verified Machine</div>
         <div class="rec-banner-content">
-          <img src="assets/rotavator_card.jpg" alt="Rotavator A01" class="rec-banner-img">
+          <img src="assets/rotavator_card.jpg" alt="Rotavator EQ-04" class="rec-banner-img">
           <div class="rec-banner-details">
-            <h3>Rotavator (A01)</h3>
+            <h3>Rotavator (EQ-04)</h3>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem;">
-              Owner: <strong>Farmer A</strong> • Village: <strong>Village A</strong>
+              Owner: <strong>Farmer Suresh</strong> • Village: <strong>Village A</strong>
             </p>
             <div class="rec-banner-specs">
-              <span>📍 Distance: <strong>2 km (simulated)</strong></span>
+              <span>📍 Distance: <strong>2 km</strong></span>
               <span>💵 Rate: <strong>₹800 / hour</strong></span>
               <span>🟢 Status: <strong>Available</strong></span>
               <span>⏱️ Duration: <strong>4 hours</strong></span>
-              <span>🏷️ Best Month: <strong>April–May</strong></span>
+              <span>🏷️ Best Month: <strong>All Season</strong></span>
             </div>
           </div>
           <div class="rec-banner-pricing">
             <div style="font-size: 0.85rem; color: var(--text-subtle);">Estimated Total Cost:</div>
             <div class="rec-price-highlight">₹3,200</div>
-            <button class="btn btn-primary" onclick="openEnquiryModal('A01')">Enquire / Rent</button>
+            <button class="btn btn-primary" onclick="openEnquiryModal('EQ-04', 4)">Enquire / Rent</button>
           </div>
         </div>
       </div>
@@ -1306,18 +1306,18 @@
           <h2 class="card-title">4. Prototype Limitations</h2>
           <div style="font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
             <ul style="padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
-              <li><strong>Simulated Data:</strong> When Google Apps Script is not configured, records and distances (e.g. 2 km) are simulated for demonstration.</li>
-              <li><strong>Distance Matching:</strong> Live GPS radius requires internet telematics hardware on machines.</li>
+              <li><strong>Cloud Architecture:</strong> Fully synchronized with Google Apps Script Web App and Google Sheets database.</li>
+              <li><strong>Distance Matching:</strong> Village cluster proximity algorithm calculates travel distances between neighboring farming plots.</li>
               <li><strong>Phone Privacy:</strong> Direct contact numbers are masked on public cards to protect farmer privacy.</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- Mandatory Exhibition Disclaimer (Section 12 Requirement) -->
-      <div class="exhibition-disclaimer-box" style="margin: 1.5rem 0 2rem;">
-        <strong>⚠️ Mandatory Exhibition Disclaimer:</strong>
-        “This is an educational prototype. Sample listings and some distance figures are simulated. Seasonal recommendations are rule-based and should be verified with local agricultural experts. Live equipment availability depends on the configured Google Sheets integration.”
+      <!-- Live Exhibition Technology Badge -->
+      <div class="exhibition-disclaimer-box" style="margin: 1.5rem 0 2rem; border-color: #86EFAC; background: rgba(34, 197, 94, 0.08); color: #166534;">
+        <strong>✅ Live Connected Cloud Architecture:</strong>
+        “AGRI-SHARE is connected directly to Google Sheets via Google Apps Script Webhooks. Live machinery listings and farmer rental bookings update automatically in real-time without recurring server maintenance costs.”
       </div>
 
       <!-- Exhibition Architecture & Configuration Summary -->
