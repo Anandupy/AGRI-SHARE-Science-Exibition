@@ -248,20 +248,17 @@
   // --- 3. FULL WEBSITE GUIDED TOUR (A-TO-Z COMPLETE 15-STOP SHOWCASE) ---
   async function runFullWebsiteTour() {
     // -------------------------------------------------------------
-    // STOP 1/15: SSVEHS School Identity & Project Vision (Home Page)
+    // STOP 1/16: Project Presentation & Core Vision (Home Page)
     // -------------------------------------------------------------
     if (typeof navigateTo === "function") navigateTo("home");
     window.scrollTo({ top: 0, behavior: "smooth" });
     await sleep(400);
 
-    setHudStatus("🏫 Stop 1/15: SSVEHS School Identity & Project Presentation (Shree Siddhi Vinayagar English High School)...");
-    const schoolChip = document.querySelector(".school-header-chip");
-    if (schoolChip) {
-      await moveCursorTo(schoolChip, 550);
-      await triggerClickEffect(schoolChip);
-    }
+    setHudStatus("🌱 Stop 1/16: AGRI-SHARE Core Innovation — Shared Agritech Platform for Rural Farmers...");
+    const heroTitle = document.querySelector(".hero-title");
+    if (heroTitle) await moveCursorTo(heroTitle, 600);
     if (!isDemoRunning) return;
-    await sleep(600);
+    await sleep(650);
 
     setHudStatus("🌱 Stop 1/15: AGRI-SHARE Core Vision — Shared Agritech to Eliminate Farmer Debt...");
     const heroTitle = document.querySelector(".hero-title");
@@ -667,7 +664,7 @@
     await sleep(400);
 
     if (typeof showToast === "function") {
-      showToast("🌟 Full A-to-Z Interactive Tour Complete! SSVEHS Science Exhibition 2026.", "success");
+      showToast("🌟 Full A-to-Z Interactive Tour Complete! Science Exhibition 2026.", "success");
     }
 
     await sleep(2200);

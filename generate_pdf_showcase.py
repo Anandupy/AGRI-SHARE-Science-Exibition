@@ -44,31 +44,15 @@ def create_cover_page(filepath):
     c.setLineWidth(0.75)
     c.rect(28, 28, width - 56, height - 56, fill=False, stroke=True)
 
-    # School Logo
-    logo_path = os.path.join(WORKSPACE_DIR, "assets", "school_logo.png")
-    if os.path.exists(logo_path):
-        # White circular backing for logo
-        c.setFillColor(colors.white)
-        c.circle(width / 2, height - 125, 48, fill=True, stroke=False)
-        c.setStrokeColor(colors.HexColor("#EAB308"))
-        c.setLineWidth(2)
-        c.circle(width / 2, height - 125, 48, fill=False, stroke=True)
-        c.drawImage(logo_path, width / 2 - 40, height - 125 - 40, width=80, height=80, mask='auto')
-
-    # Trust Title
-    c.setFillColor(colors.HexColor("#FDE047"))
-    c.setFont("Helvetica-Bold", 10)
-    c.drawCentredString(width / 2, height - 195, "P. K. KRISHNAN EDUCATIONAL TRUST'S")
-
-    # School Name
-    c.setFillColor(colors.white)
-    c.setFont("Helvetica-Bold", 18)
-    c.drawCentredString(width / 2, height - 220, "SHREE SIDDHI VINAYAGAR ENGLISH HIGH SCHOOL")
-
     # Event Badge
     c.setFillColor(colors.HexColor("#86EFAC"))
-    c.setFont("Helvetica-Bold", 12)
-    c.drawCentredString(width / 2, height - 245, "🔬 SCHOOL SCIENCE EXHIBITION 2026 SHOWCASE")
+    c.setFont("Helvetica-Bold", 14)
+    c.drawCentredString(width / 2, height - 195, "🔬 NATIONAL SCIENCE EXHIBITION 2026")
+
+    # Innovation Subtitle
+    c.setFillColor(colors.white)
+    c.setFont("Helvetica-Bold", 16)
+    c.drawCentredString(width / 2, height - 225, "DIGITAL PUBLIC INFRASTRUCTURE IN AGRICULTURE")
 
     # Separator Line
     c.setStrokeColor(colors.HexColor("#334155"))
@@ -111,14 +95,14 @@ def create_cover_page(filepath):
     c.drawString(65, height - 440, "COMPLETE UI PROTOTYPE INDEX:")
 
     sections = [
-        ("01", "SSVEHS Animated Intro & Showcase Launch Loader", "School Logo & Launch"),
+        ("01", "Prototype Launch & Agritech System Architecture", "Platform Launch"),
         ("02", "Home Page — Agritech Ecosystem & Value Propositions", "Hero, Highlights, Metrics"),
         ("03", "Find Agricultural Equipment — Smart Village Machinery Search", "Google Form Dual-Sync"),
         ("04", "List Your Equipment — Rural Machinery Registry", "Real Sheets Master DB"),
         ("05", "Available Machinery Database — Live Equipment Catalog", "Equipment Catalog Grid"),
         ("06", "Financial Cost Calculator — Capital Lockup & Savings Meter", "80% Cost Reduction Analysis"),
         ("07", "Crop Calendar — Seasonal Sowing & Harvesting Timetable", "Equipment Matrix"),
-        ("08", "About AGRI-SHARE — Methodology, School & Exhibition Guide", "Student Innovation Model"),
+        ("08", "About AGRI-SHARE — Methodology, Research & Exhibition Guide", "Student Innovation Model"),
         ("09", "Role Portals & Management Dashboards", "Owner & Farmer Consoles"),
         ("10", "Google Cloud Integration & Central Spreadsheet Settings", "Database Schema & Sync")
     ]
@@ -223,7 +207,7 @@ def build_full_pdf():
         p_width, p_height = rect.width, rect.height
 
         # Header bar
-        header_text = "AGRI-SHARE — Smart Agricultural Equipment Sharing | SSVEHS Science Exhibition 2026"
+        header_text = "AGRI-SHARE — Smart Agricultural Equipment Sharing | Science Exhibition 2026"
         page.insert_text(
             fitz.Point(36, 22),
             header_text,
@@ -237,7 +221,7 @@ def build_full_pdf():
         # Footer line
         page.draw_line(fitz.Point(36, p_height - 26), fitz.Point(p_width - 36, p_height - 26), color=(0.85, 0.90, 0.85), width=0.75)
         # Footer text
-        footer_left = "Shree Siddhi Vinayagar English High School • Digital Public Infrastructure"
+        footer_left = "National Science Exhibition • Digital Public Infrastructure in Agriculture"
         footer_right = f"Page {p_idx + 1} of {total_pages}"
         page.insert_text(
             fitz.Point(36, p_height - 14),
