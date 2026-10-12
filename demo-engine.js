@@ -254,13 +254,7 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
     await sleep(400);
 
-    setHudStatus("🌱 Stop 1/16: AGRI-SHARE Core Innovation — Shared Agritech Platform for Rural Farmers...");
-    const heroTitle = document.querySelector(".hero-title");
-    if (heroTitle) await moveCursorTo(heroTitle, 600);
-    if (!isDemoRunning) return;
-    await sleep(650);
-
-    setHudStatus("🌱 Stop 1/15: AGRI-SHARE Core Vision — Shared Agritech to Eliminate Farmer Debt...");
+    setHudStatus("🌱 Stop 1/16: AGRI-SHARE Core Innovation & Vision — Shared Agritech Platform for Rural Farmers...");
     const heroTitle = document.querySelector(".hero-title");
     if (heroTitle) await moveCursorTo(heroTitle, 600);
     if (!isDemoRunning) return;
@@ -276,9 +270,9 @@
     await sleep(750);
 
     // -------------------------------------------------------------
-    // STOP 2/15: Dynamic Crop Month Indicator & Value Pillars
+    // STOP 2/16: Dynamic Crop Month Indicator & Value Pillars
     // -------------------------------------------------------------
-    setHudStatus("🗓️ Stop 2/15: Dynamic Agricultural Month Bar — Real-Time Seasonal Crop Stage...");
+    setHudStatus("🗓️ Stop 2/16: Dynamic Agricultural Month Bar — Real-Time Seasonal Crop Stage...");
     const monthStrip = document.getElementById("home-month-strip");
     if (monthStrip) {
       await moveCursorTo(monthStrip, 600);
@@ -287,7 +281,7 @@
     if (!isDemoRunning) return;
     await sleep(700);
 
-    setHudStatus("⚖️ Stop 2/15: 4 Value Pillars: Equitable Access, Supplementary Income, Timely Sowing & Zero Debt...");
+    setHudStatus("⚖️ Stop 2/16: 4 Value Pillars: Equitable Access, Supplementary Income, Timely Sowing & Zero Debt...");
     const pillarsSection = document.querySelector(".value-pillars-grid") || document.querySelector(".pillars-grid");
     if (pillarsSection) {
       await moveCursorTo(pillarsSection, 650);
@@ -296,9 +290,9 @@
     await sleep(750);
 
     // -------------------------------------------------------------
-    // STOP 3/15: Multilingual Rural Accessibility (English/Hindi/Marathi)
+    // STOP 3/16: Multilingual Rural Accessibility (English/Hindi/Marathi)
     // -------------------------------------------------------------
-    setHudStatus("🌐 Stop 3/15: Multilingual Inclusion: Language Support for Rural Farmers (HI / MR / EN)...");
+    setHudStatus("🌐 Stop 3/16: Multilingual Inclusion: Language Support for Rural Farmers (HI / MR / EN)...");
     const langSelector = document.getElementById("lang-select");
     if (langSelector) {
       await moveCursorTo(langSelector, 550);
@@ -313,9 +307,9 @@
     await sleep(600);
 
     // -------------------------------------------------------------
-    // STOP 4/15: Find Equipment — Live Machinery Search Engine
+    // STOP 4/16: Find Equipment — Live Machinery Search Engine
     // -------------------------------------------------------------
-    setHudStatus("🔍 Stop 4/15: Navigating to Find Equipment — Live Village Search Engine...");
+    setHudStatus("🔍 Stop 4/16: Navigating to Find Equipment — Live Village Search Engine...");
     const navFind = document.getElementById("nav-find");
     if (navFind) {
       await moveCursorTo(navFind, 500);
@@ -356,9 +350,9 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 5/15: Direct Google Sheet Sync & Embedded Form Verification
+    // STOP 5/16: Direct Google Sheet Sync & Embedded Form Verification
     // -------------------------------------------------------------
-    setHudStatus("📊 Stop 5/15: Live Google Sheet Destination ('Find Agricultural Equipment Responses')...");
+    setHudStatus("📊 Stop 5/16: Live Google Sheet Destination ('Find Agricultural Equipment Responses')...");
     const findSheetBtn = document.querySelector("#page-find .btn-secondary");
     if (findSheetBtn) await moveCursorTo(findSheetBtn, 550);
     if (!isDemoRunning) return;
@@ -385,9 +379,9 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 6/15: Available Equipment Database & Real-Time Filter Pills
+    // STOP 6/16: Available Equipment Database & Real-Time Filter Pills
     // -------------------------------------------------------------
-    setHudStatus("📦 Stop 6/15: Available Equipment Database — Village Cluster Catalog...");
+    setHudStatus("📦 Stop 6/16: Available Equipment Database — Village Cluster Catalog...");
     const navAvailable = document.getElementById("nav-available");
     if (navAvailable) {
       await moveCursorTo(navAvailable, 500);
@@ -428,14 +422,19 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 7/15: Interactive Booking Modal & Digital Token Generation
+    // STOP 7/16: Interactive Booking Modal & Digital Token Generation
     // -------------------------------------------------------------
-    setHudStatus("📝 Stop 7/15: Launching Machine Booking Enquiry Modal on Available Machine...");
-    const requestBtn = document.querySelector(".btn-card-request") || document.querySelector(".equipment-card .btn-primary");
+    setHudStatus("📝 Stop 7/16: Launching Machine Booking Enquiry Modal on Available Machine...");
+    const requestBtn = document.querySelector(".equipment-result-card .btn-primary") ||
+      document.querySelector("button[onclick*='openEnquiryModal']") ||
+      document.querySelector(".btn-card-request") ||
+      document.querySelector(".equipment-card .btn-primary");
     if (requestBtn) {
       await moveCursorTo(requestBtn, 550);
       await triggerClickEffect(requestBtn);
       requestBtn.click();
+    } else if (typeof openEnquiryModal === "function") {
+      openEnquiryModal("EQ001", 4);
     }
     await sleep(750);
     if (!isDemoRunning) return;
@@ -462,9 +461,9 @@
     await sleep(400);
 
     // -------------------------------------------------------------
-    // STOP 8/15: List Equipment — Farmer Machine Monetization
+    // STOP 8/16: List Equipment — Farmer Machine Monetization
     // -------------------------------------------------------------
-    setHudStatus("➕ Stop 8/15: Navigating to List Equipment — Enabling Machine Owners to Earn Regular Income...");
+    setHudStatus("➕ Stop 8/16: Navigating to List Equipment — Enabling Machine Owners to Earn Regular Income...");
     const navList = document.getElementById("nav-list");
     if (navList) {
       await moveCursorTo(navList, 500);
@@ -488,9 +487,9 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 9/15: Financial Cost & Savings Calculator (80% Reduction)
+    // STOP 9/16: Financial Cost & Savings Calculator (80% Reduction)
     // -------------------------------------------------------------
-    setHudStatus("💰 Stop 9/15: Financial Cost Calculator — Buy vs Rent Capital Lockup Analysis...");
+    setHudStatus("💰 Stop 9/16: Financial Cost Calculator — Buy vs Rent Capital Lockup Analysis...");
     const navCalc = document.getElementById("nav-calculator");
     if (navCalc) {
       await moveCursorTo(navCalc, 500);
@@ -502,11 +501,19 @@
     if (!isDemoRunning) return;
 
     setHudStatus("📈 Adjusting Annual Hours Slider (35 hrs): Demonstrating Farmer Break-Even Savings...");
-    const hoursSlider = document.getElementById("calc-hours");
+    const hoursSlider = document.getElementById("slider-annual-hours") ||
+      document.getElementById("calc-annual-hours") ||
+      document.getElementById("calc-hours");
     if (hoursSlider) {
       await moveCursorTo(hoursSlider, 500);
       hoursSlider.value = "35";
       hoursSlider.dispatchEvent(new Event("input", { bubbles: true }));
+      const annualInput = document.getElementById("calc-annual-hours");
+      if (annualInput && annualInput !== hoursSlider) {
+        annualInput.value = "35";
+        annualInput.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+      if (typeof calculateEconomics === "function") calculateEconomics();
     }
     await sleep(650);
     if (!isDemoRunning) return;
@@ -521,9 +528,9 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 10/15: Crop Calendar & Seasonal Recommendations
+    // STOP 10/16: Crop Calendar & Seasonal Recommendations
     // -------------------------------------------------------------
-    setHudStatus("📅 Stop 10/15: Crop Calendar — Seasonal Sowing & Harvesting Machine Recommendations...");
+    setHudStatus("📅 Stop 10/16: Crop Calendar — Seasonal Sowing & Harvesting Machine Recommendations...");
     const navCalendar = document.getElementById("nav-calendar");
     if (navCalendar) {
       await moveCursorTo(navCalendar, 500);
@@ -543,9 +550,9 @@
     if (!isDemoRunning) return;
 
     // -------------------------------------------------------------
-    // STOP 11/15: Equipment Owner Control Portal
+    // STOP 11/16: Equipment Owner Control Portal
     // -------------------------------------------------------------
-    setHudStatus("🚜 Stop 11/15: Opening Equipment Owner Control Portal Dashboard...");
+    setHudStatus("🚜 Stop 11/16: Opening Equipment Owner Control Portal Dashboard...");
     const ownerPill = document.getElementById("btn-header-owner-login");
     if (ownerPill) {
       await moveCursorTo(ownerPill, 500);
@@ -561,9 +568,9 @@
     await sleep(350);
 
     // -------------------------------------------------------------
-    // STOP 12/15: Farmer / Hirer Request Tracking Portal
+    // STOP 12/16: Farmer / Hirer Request Tracking Portal
     // -------------------------------------------------------------
-    setHudStatus("👨‍🌾 Stop 12/15: Opening Farmer / Hirer Request Tracking Portal Dashboard...");
+    setHudStatus("👨‍🌾 Stop 12/16: Opening Farmer / Hirer Request Tracking Portal Dashboard...");
     const farmerPill = document.getElementById("btn-header-farmer-login");
     if (farmerPill) {
       await moveCursorTo(farmerPill, 500);
@@ -579,9 +586,9 @@
     await sleep(350);
 
     // -------------------------------------------------------------
-    // STOP 13/15: Google Cloud & Central Spreadsheet Architecture
+    // STOP 13/16: Google Cloud & Central Spreadsheet Architecture
     // -------------------------------------------------------------
-    setHudStatus("⚙️ Stop 13/15: Opening Google Cloud Integration & Central Sheet Settings Console...");
+    setHudStatus("⚙️ Stop 13/16: Opening Google Cloud Integration & Central Sheet Settings Console...");
     const configBtn = document.querySelector(".config-trigger-btn");
     if (configBtn) {
       await moveCursorTo(configBtn, 500);
@@ -715,7 +722,7 @@
       void cursor.offsetWidth; // Reflow
     }
 
-    setHudStatus("🚀 Starting Full A-to-Z Website Tour (15 Stops Complete Showcase)...");
+    setHudStatus("🚀 Starting Full A-to-Z Website Tour (16 Stops Complete Showcase)...");
     runFullWebsiteTour();
   };
 
